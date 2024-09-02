@@ -1,40 +1,45 @@
-//
-//  WelcomePageView.swift
-//  MobileAcebook
-//
-//  Created by Josué Estévez Fernández on 30/09/2023.
-//
-
 import SwiftUI
 
 struct WelcomePageView: View {
     var body: some View {
-        ZStack {
-            VStack {
-                Spacer()
+        NavigationView {
+            ZStack {
+                VStack {
+                    Spacer()
 
-                Text("Welcome to Acebook!")
-                    .font(.largeTitle)
-                    .padding(.bottom, 20)
-                    .accessibilityIdentifier("welcomeText")
+                    Text("Welcome to Acebook!")
+                        .font(.largeTitle)
 
-                Spacer()
+                    Text("All your data belongs to us...🔎")
+                        .font(.caption)
 
-                Image("makers-logo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 200, height: 200)
-                    .accessibilityIdentifier("makers-logo")
-                
-                Spacer()
+                    Spacer()
 
-                Button("Sign Up") {
-                    // TODO: sign up logic
+                    Image("zuck")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 300, height: 300)
+                        .accessibilityIdentifier("zuck")
+                        .cornerRadius(25)
+
+                    Spacer()
+
+                    HStack {
+                        NavigationLink(destination: LoginPageView()) {
+                            Text("Login ")
+                                .bold()
+                            }
+
+                        NavigationLink(destination: SignupPageView()) {
+                                Text(" Signup")
+                                .bold()
+                            }
+                    }
+
+                    Spacer()
                 }
-                .accessibilityIdentifier("signUpButton")
-                
-                Spacer()
             }
+            .padding()
         }
     }
 }
