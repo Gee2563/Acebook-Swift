@@ -20,7 +20,7 @@ struct Feed: View {
             NavigationView {
                 List(posts, id: \._id) { item in
                     VStack(alignment: .leading, spacing: 10.0) {
-                        Text(item.message)
+                        Text(item.content)
                             .font(.headline)
                     }
                     
