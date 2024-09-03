@@ -3,6 +3,12 @@ import SwiftUI
 struct LoginPageView: View {
     @State private var email = ""
     @State private var password = ""
+    @State private var username = ""
+    @State private var imgUrl = ""
+    
+    func handleLogin() {
+        login(User(email: email, password: password, username: username, imgUrl: imgUrl))
+    }
 
     var body: some View {
         VStack {
@@ -19,6 +25,7 @@ struct LoginPageView: View {
                             style: StrokeStyle()
                         )
                 )
+                .autocapitalization(.none)
                 .foregroundColor(Color.black)
 
             SecureField("Password", text: self.$password)
@@ -31,21 +38,19 @@ struct LoginPageView: View {
                             style: StrokeStyle()
                         )
                 )
+                .autocapitalization(.none)
                 .foregroundColor(Color.black)
                 .padding(.top)
 
             Button(
-                action: {},
+                action: {handleLogin()},
                 label: {
                     Text("Login")
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 10)
-                    }
+                        .padding(.vertical, 8)
+                        .frame(maxWidth: .infinity)
+                }
             )
-            .frame(minWidth: 0, maxWidth: .infinity)
-            .background(Color.blue)
-            .cornerRadius(8)
-            .foregroundColor(Color.white)
+            .buttonStyle(.borderedProminent)
             .padding(.top)
 
             HStack {
