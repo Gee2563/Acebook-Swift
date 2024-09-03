@@ -79,3 +79,50 @@ func updatePostByID(id: Int, newContent: String, completion: @escaping (Error?) 
 
     task.resume()
 }
+
+
+func updateLikesByID( id: Int, userId: Int, completion: @escaping (Error?) -> Void) {
+    guard let url = URL(string: "https://localhost:5000/posts/like") else {
+        completion(URLError(.badURL))
+        return
+    }
+
+    var request = URLRequest(url: url)
+    request.httpMethod = "PATCH"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+
+    let body: [String: Any] = ["userId": userId]
+    do {
+        request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+    } catch {
+        completion(error)
+        return
+    }
+
+    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+            completion(error)
+            return
+        }
+
+        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+            completion(URLError(.badServerResponse))
+            return
+        }
+
+        if let data = data {
+            do {
+                let updatedPost = try JSONDecoder().decode(Post.self, from: data)
+                print("Updated post: \(updatedPost)")
+                completion(nil)
+            } catch {
+                completion(error)
+            }
+        } else {
+            completion(nil)
+        }
+    }
+
+    task.resume()
+}

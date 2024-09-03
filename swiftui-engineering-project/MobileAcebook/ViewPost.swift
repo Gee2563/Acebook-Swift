@@ -42,8 +42,10 @@ struct ViewPost: View {
                                 }
                             }
                         }) {
-                            Text("Delete")
+                           
+                            Label("", systemImage: "trash")
                                 .foregroundColor(.red)
+                                .labelsHidden()
                         }
                         .alert(isPresented: $showAlert) {
                             Alert(
@@ -89,6 +91,64 @@ struct ViewPost: View {
                         Text(post.content)
                             .font(.body)
                             .foregroundColor(.primary)
+                        Section{
+                            HStack{
+                            
+                            // This is the likes section
+                            
+                            if !post.likes.isEmpty {
+                                Text(" \(post.likes.count) likes")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                                Spacer()
+                                if post.likes.contains(currentUserID) {
+                                    Button(action: {
+                                        updateLikesByID(id: post.id, userId: currentUserID) { error in
+                                            if let error = error {
+                                                deleteError = error
+                                                showAlert = true
+                                            } else {
+                                                print("Post unliked successfully")
+                                            }
+                                        }
+                                    }) {
+                                        Text("Unlike")
+                                            .foregroundColor(.red)
+                                    }
+                                } else {
+                                    Button(action: {
+                                        updateLikesByID(id: post.id, userId: currentUserID) { error in
+                                            if let error = error {
+                                                deleteError = error
+                                                showAlert = true
+                                            } else {
+                                                print("Post liked successfully")
+                                            }
+                                        }
+                                    }) {
+                                        Text("Like")
+                                            .foregroundColor(.blue)
+                                    }
+                                }
+                            } else {
+                                Button(action: {
+                                    updateLikesByID(id: post.id, userId: currentUserID) { error in
+                                        if let error = error {
+                                            deleteError = error
+                                            showAlert = true
+                                        } else {
+                                            print("Post liked successfully")
+                                        }
+                                    }
+                                }) {
+                                    Text("Like")
+                                        .foregroundColor(.blue)
+                                }
+                            }
+                            
+                            
+                        }
+                    }
                     }
                 }
             }
@@ -112,7 +172,7 @@ struct ViewPost: View {
     UserDefaults.standard.set(1, forKey: "currentUserId")
     
     return ViewPost(
-        post: Post(postId: 1, userID: 1, username: "George Smith", content: "This is a raveaowihdfaowdhaowdiawd awhdoawhdaowdihwaod ", comments: [])
+        post: Post(postId: 1, userID: 1, username: "George Smith", content: "This is a raveaowihdfaowdhaowdiawd awhdoawhdaowdihwaod ", comments: [],likes: [1,2,3,4])
     )
 }
 

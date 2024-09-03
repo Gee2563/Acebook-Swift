@@ -12,13 +12,16 @@ public struct  Post : Codable{
     let username: String
     let content: String
     let comments: [Comment]
+    // userId == int, so just populate with a list of numbers
+    let likes: [Int]
     
-    init(postId: Int, userID: Int, username: String, content: String, comments: [Comment]) {
+    init(postId: Int, userID: Int, username: String, content: String, comments: [Comment], likes: [Int]) {
         self.id = postId
         self.userId = userID
         self.username = username
         self.content = content
         self.comments = comments
+        self.likes = likes
     }
 }
 
