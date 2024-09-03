@@ -19,7 +19,10 @@
 		AE5D85E32AC9AFD2009680C6 /* MockAuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D85E22AC9AFD2009680C6 /* MockAuthenticationService.swift */; };
 		AE5D85E62AC9B077009680C6 /* AuthenticationServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D85E52AC9B077009680C6 /* AuthenticationServiceProtocol.swift */; };
 		AE5D85E82AC9B29A009680C6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D85E72AC9B29A009680C6 /* User.swift */; };
-		C9FC8AAE2C861A2400ED4E13 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC8AAD2C861A2400ED4E13 /* Post.swift */; };
+		CC203C092C8703B6007DFAAC /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC203C082C8703B6007DFAAC /* PostService.swift */; };
+		CC203C0B2C8703C8007DFAAC /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC203C0A2C8703C8007DFAAC /* Post.swift */; };
+		CC203C0D2C870410007DFAAC /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC203C0C2C870410007DFAAC /* Comment.swift */; };
+		CC203C0F2C870527007DFAAC /* ViewPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC203C0E2C870527007DFAAC /* ViewPost.swift */; };
 		C9FC8AB02C86693F00ED4E13 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC8AAF2C86693F00ED4E13 /* FeedView.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,8 +59,11 @@
 		AE5D85E22AC9AFD2009680C6 /* MockAuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthenticationService.swift; sourceTree = "<group>"; };
 		AE5D85E52AC9B077009680C6 /* AuthenticationServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationServiceProtocol.swift; sourceTree = "<group>"; };
 		AE5D85E72AC9B29A009680C6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		CC203C082C8703B6007DFAAC /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
+		CC203C0A2C8703C8007DFAAC /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		CC203C0C2C870410007DFAAC /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		CC203C0E2C870527007DFAAC /* ViewPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPost.swift; sourceTree = "<group>"; };
 		C97F620D2C85D4870057748E /* MobileAcebook.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MobileAcebook.xctestplan; sourceTree = "<group>"; };
-		C9FC8AAD2C861A2400ED4E13 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		C9FC8AAF2C86693F00ED4E13 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +121,7 @@
 				AE5D85DF2AC9AF83009680C6 /* Models */,
 				AE5D85DD2AC9AF72009680C6 /* Services */,
 				AE5D85B32AC8A224009680C6 /* Assets.xcassets */,
+				CC203C0E2C870527007DFAAC /* ViewPost.swift */,
 				AE5D85B52AC8A224009680C6 /* Preview Content */,
 				AE5D85D92AC8A337009680C6 /* WelcomePageView.swift */,
 				C9FC8AAF2C86693F00ED4E13 /* FeedView.swift */,
@@ -152,6 +159,7 @@
 		AE5D85DD2AC9AF72009680C6 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				CC203C082C8703B6007DFAAC /* PostService.swift */,
 				AE5D85E02AC9AFA9009680C6 /* AuthenticationService.swift */,
 			);
 			path = Services;
@@ -169,7 +177,8 @@
 			isa = PBXGroup;
 			children = (
 				AE5D85E72AC9B29A009680C6 /* User.swift */,
-				C9FC8AAD2C861A2400ED4E13 /* Post.swift */,
+				CC203C0A2C8703C8007DFAAC /* Post.swift */,
+				CC203C0C2C870410007DFAAC /* Comment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -313,11 +322,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE5D85E12AC9AFA9009680C6 /* AuthenticationService.swift in Sources */,
+				CC203C092C8703B6007DFAAC /* PostService.swift in Sources */,
 				AE5D85E62AC9B077009680C6 /* AuthenticationServiceProtocol.swift in Sources */,
+				CC203C0D2C870410007DFAAC /* Comment.swift in Sources */,
+				CC203C0F2C870527007DFAAC /* ViewPost.swift in Sources */,
 				AE5D85B02AC8A221009680C6 /* MobileAcebookApp.swift in Sources */,
 				C9FC8AB02C86693F00ED4E13 /* FeedView.swift in Sources */,
 				C9FC8AAE2C861A2400ED4E13 /* Post.swift in Sources */,
 				AE5D85E82AC9B29A009680C6 /* User.swift in Sources */,
+				CC203C0B2C8703C8007DFAAC /* Post.swift in Sources */,
 				AE5D85DA2AC8A337009680C6 /* WelcomePageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
