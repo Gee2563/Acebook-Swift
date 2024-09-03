@@ -6,3 +6,12 @@
 //
 
 
+public struct Post: Codable {
+    let _id: String
+    let message: String
+    let createdAt: String
+    let imgUrl: String
+//    let createdBy: User
+//    var likes: [String]?
+    
+}

@@ -23,5 +23,4 @@ const decodeToken = (token) => {
   return JWT.decode(token, secret);
 };
 
-
 module.exports = { generateToken, decodeToken };
