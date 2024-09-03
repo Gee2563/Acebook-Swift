@@ -3,11 +3,9 @@ import SwiftUI
 struct LoginPageView: View {
     @State private var email = ""
     @State private var password = ""
-    @State private var username = ""
-    @State private var imgUrl = ""
     
     func handleLogin() {
-        login(User(email: email, password: password, username: username, imgUrl: imgUrl))
+//        login(email, password)
     }
 
     var body: some View {

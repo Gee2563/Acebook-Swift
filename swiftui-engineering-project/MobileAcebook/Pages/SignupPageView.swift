@@ -5,11 +5,11 @@ struct SignupPageView: View {
     @State private var password = ""
     @State private var username = ""
     @State private var imgUrl = ""
-
+    
     func handleSignup() {
-        signup(User(email: email, password: password, username: username, imgUrl: imgUrl))
+        signup(email, password, username, imgUrl)
     }
-
+    
     var body: some View {
         VStack {
             Text("Signup")
@@ -71,7 +71,7 @@ struct SignupPageView: View {
                 Text("Already have an account?")
                 NavigationLink(destination: LoginPageView()) {
                         Text("Login")
-                        .bold()
+                            .bold()
                     }
             }
             .padding(.top)

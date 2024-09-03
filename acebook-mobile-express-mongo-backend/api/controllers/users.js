@@ -2,6 +2,8 @@ const User = require("../models/user");
 const { generateToken } = require("../lib/token");
 
 const create = async (req, res) => {
+  console.log(req)
+
   try {
     const userDetails = {
       email: req.body.email,
@@ -11,13 +13,13 @@ const create = async (req, res) => {
     };
 
     const user = new User(userDetails);
-    console.log(user);
+    // console.log(user);
 
     await user.save();
 
-    console.log("User created, id:", user._id.toString());
+    // console.log("User created, id:", user._id.toString());
     res.status(201).json({ message: `User created, id: ${user._id.toString()}` });
-    
+
   } catch (err) {
     // console.log(err);
     res.status(400).json({ message: "Something went wrong" });
@@ -42,7 +44,7 @@ const updateProfilePicture = async (req, res) => {
   }
 };
 
-const getUserDetails = async (req, res) => { 
+const getUserDetails = async (req, res) => {
   try {
     const user = await User.find({ _id: req.user_id });
 
