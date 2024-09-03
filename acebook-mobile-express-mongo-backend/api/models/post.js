@@ -12,4 +12,7 @@ const PostSchema = new mongoose.Schema({
 
 const Post = mongoose.model("Post", PostSchema);
 
+const dateTimeString = new Date().toLocaleString("en-GB");
+new Post({ message: `Test message, created at ${dateTimeString}`, createdAt: dateTimeString, imgUrl: "someImage"}).save();
+
 module.exports = Post;

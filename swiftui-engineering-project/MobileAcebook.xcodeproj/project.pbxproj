@@ -19,6 +19,8 @@
 		AE5D85E32AC9AFD2009680C6 /* MockAuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D85E22AC9AFD2009680C6 /* MockAuthenticationService.swift */; };
 		AE5D85E62AC9B077009680C6 /* AuthenticationServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D85E52AC9B077009680C6 /* AuthenticationServiceProtocol.swift */; };
 		AE5D85E82AC9B29A009680C6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D85E72AC9B29A009680C6 /* User.swift */; };
+		C9FC8AAE2C861A2400ED4E13 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC8AAD2C861A2400ED4E13 /* Post.swift */; };
+		C9FC8AB02C86693F00ED4E13 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC8AAF2C86693F00ED4E13 /* FeedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,9 @@
 		AE5D85E22AC9AFD2009680C6 /* MockAuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthenticationService.swift; sourceTree = "<group>"; };
 		AE5D85E52AC9B077009680C6 /* AuthenticationServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationServiceProtocol.swift; sourceTree = "<group>"; };
 		AE5D85E72AC9B29A009680C6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		C97F620D2C85D4870057748E /* MobileAcebook.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MobileAcebook.xctestplan; sourceTree = "<group>"; };
+		C9FC8AAD2C861A2400ED4E13 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		C9FC8AAF2C86693F00ED4E13 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +89,7 @@
 		AE5D85A32AC8A221009680C6 = {
 			isa = PBXGroup;
 			children = (
+				C97F620D2C85D4870057748E /* MobileAcebook.xctestplan */,
 				AE5D85AE2AC8A221009680C6 /* MobileAcebook */,
 				AE5D85BF2AC8A224009680C6 /* MobileAcebookTests */,
 				AE5D85C92AC8A224009680C6 /* MobileAcebookUITests */,
@@ -104,13 +110,14 @@
 		AE5D85AE2AC8A221009680C6 /* MobileAcebook */ = {
 			isa = PBXGroup;
 			children = (
+				AE5D85AF2AC8A221009680C6 /* MobileAcebookApp.swift */,
 				AE5D85E42AC9B060009680C6 /* Protocols */,
 				AE5D85DF2AC9AF83009680C6 /* Models */,
 				AE5D85DD2AC9AF72009680C6 /* Services */,
-				AE5D85AF2AC8A221009680C6 /* MobileAcebookApp.swift */,
 				AE5D85B32AC8A224009680C6 /* Assets.xcassets */,
 				AE5D85B52AC8A224009680C6 /* Preview Content */,
 				AE5D85D92AC8A337009680C6 /* WelcomePageView.swift */,
+				C9FC8AAF2C86693F00ED4E13 /* FeedView.swift */,
 			);
 			path = MobileAcebook;
 			sourceTree = "<group>";
@@ -162,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				AE5D85E72AC9B29A009680C6 /* User.swift */,
+				C9FC8AAD2C861A2400ED4E13 /* Post.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -238,7 +246,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					AE5D85AB2AC8A221009680C6 = {
 						CreatedOnToolsVersion = 14.2;
@@ -307,6 +315,8 @@
 				AE5D85E12AC9AFA9009680C6 /* AuthenticationService.swift in Sources */,
 				AE5D85E62AC9B077009680C6 /* AuthenticationServiceProtocol.swift in Sources */,
 				AE5D85B02AC8A221009680C6 /* MobileAcebookApp.swift in Sources */,
+				C9FC8AB02C86693F00ED4E13 /* FeedView.swift in Sources */,
+				C9FC8AAE2C861A2400ED4E13 /* Post.swift in Sources */,
 				AE5D85E82AC9B29A009680C6 /* User.swift in Sources */,
 				AE5D85DA2AC8A337009680C6 /* WelcomePageView.swift in Sources */,
 			);
@@ -383,6 +393,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -443,6 +454,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

@@ -5,6 +5,7 @@ const getAllPosts = async (req, res) => {
   try {
     //Get all posts and populate the createdBy field with user data
     const posts = await Post.find().populate("createdBy");
+    // const posts = await Post.find()
 
     const updatedPosts = [];
 
@@ -16,12 +17,12 @@ const getAllPosts = async (req, res) => {
         message: post.message,
         createdAt: post.createdAt,
         imgUrl: post.imgUrl,
-        likes: post.likes,
-        createdBy: {
-          _id: post.createdBy._id,
-          username: post.createdBy.username,
-          profilePicture: post.createdBy.imgUrl,
-        },
+        // likes: post.likes,
+        // createdBy: {
+        //   _id: post.createdBy._id,
+        //   username: post.createdBy.username,
+        //   profilePicture: post.createdBy.imgUrl,
+        // },
       };
 
       updatedPosts.push(newPost);
