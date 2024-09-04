@@ -117,10 +117,78 @@ const updateLikes = async (req, res) => {
   }
 };
 
+const deletePostbyId = async (req, res) => {
+  try {
+    const postId = req.body.postId;
+    const userId = req.user_id;
+
+    if (!postId) {
+      return res.status(400).json({ message: "Post ID is required" });
+    }
+
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    if (post.userId.toString() !== userId) {
+      return res.status(403).json({ message: "Unauthorized action" });
+    }
+
+    await post.deleteOne();
+
+    const token = generateToken(userId);
+    
+    res.status(200).json({ message: "Post deleted successfully", token: token });
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    res.status(500).json({ message: "Something went wrong - try again" });
+  }
+};
+
+const updatePostById = async (req, res) => {
+
+  try {
+
+    const postId = req.body.postId;
+    const userId = req.user_id;
+
+    if (!postId) {
+      return res.status(400).json({ message: "Post ID is required" });
+    }
+
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    if (post.userId.toString() !== userId) {
+      return res.status(403).json({ message: "Unauthorized action" });
+    }
+
+    post.message = req.body.message;
+    await post.save();
+
+    const token = generateToken(userId);
+
+    res.status(200).json({ message: "Post updated successfully", token: token });
+
+  } catch (error) {
+
+    console.error("Error updating post:", error);
+    res.status(500).json({ message: "Something went wrong - try again" });
+
+  }
+
+  }
+
+
 const PostsController = {
   getAllPosts: getAllPosts,
   createPost: createPost,
   updateLikes: updateLikes,
+  deletePostbyId: deletePostbyId,
+  updatePostById: updatePostById
 };
 
 module.exports = PostsController;
