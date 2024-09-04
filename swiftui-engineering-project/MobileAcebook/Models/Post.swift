@@ -15,16 +15,25 @@ import Foundation
 //    let createdBy: User
 //    var likes: [String]?
 //}
-public struct  Post : Codable{
-    let _id: String
-//    let userId: Int
-//    let username: String
+public struct Post: Codable{
+    let id: String
+    let userId: PublicUser
     let content: String
 //    let comments: [Comment]
-//    // userId == int, so just populate with a list of numbers
-//    let likes: [Int]
+//    let likes: [PublicUser]
     let createdAt: String
-    let imgUrl: String
+    let imgUrl: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "_id" // we receive _id from mongo
+        case userId
+        case content
+//        case likes
+        case createdAt
+        case imgUrl
+           
+       }
+
 //
 //    init(postId: Int, userID: Int, username: String, content: String, comments: [Comment], likes: [Int], createdAt: String, imgUrl: String) {
 //        self._id = postId

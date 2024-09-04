@@ -3,9 +3,8 @@ const { generateToken } = require("../lib/token");
 
 const getAllPosts = async (req, res) => {
   try {
-    //Get all posts and populate the createdBy field with user data
-    const posts = await Post.find().populate("createdBy");
-    // const posts = await Post.find()
+    //Get all posts and populate the userId field with user data
+    const posts = await Post.find().populate("userId");
 
     const updatedPosts = [];
 
@@ -18,11 +17,11 @@ const getAllPosts = async (req, res) => {
         createdAt: post.createdAt,
         imgUrl: post.imgUrl,
         likes: post.likes,
-        // createdBy: {
-        //   _id: post.createdBy._id,
-        //   username: post.createdBy.username,
-        //   profilePicture: post.createdBy.imgUrl,
-        // },
+        userId: {
+          _id: post.userId._id.toString(),
+          username: post.userId.username,
+          profilePicture: post.userId.imgUrl,
+        },
       };
 
       updatedPosts.push(newPost);
@@ -32,7 +31,7 @@ const getAllPosts = async (req, res) => {
     res.status(200).json({ posts: updatedPosts, token: token });
   } catch (error) { 
     // console.log(error);
-    res.status(400).json({ content: "Something went wrong - try again" });
+    res.status(400).json({ message: "Something went wrong - try again" });
   }
 };
 
@@ -41,7 +40,7 @@ const createPost = async (req, res) => {
     const postContent = {
       content: req.body.content,
       createdAt: Date.now(),
-      createdBy: req.user_id,
+      userId: req.user_id,
       imgUrl: req.body.imgUrl
         ? req.body.imgUrl
         : null,
@@ -53,11 +52,11 @@ const createPost = async (req, res) => {
     post.save();
 
     const newToken = generateToken(req.user_id);
-    res.status(201).json({ content: "Post created", token: newToken });
+    res.status(201).json({ message: "Post created", token: newToken });
 
   } catch (error) { 
     console.log(error)
-    res.status(400).json({ content: "Something went wrong - try again" });
+    res.status(400).json({ message: "Something went wrong - try again" });
   }
 };
 
@@ -93,7 +92,7 @@ const updateLikes = async (req, res) => {
       res.status(201).json({
         post: updatedPost[0],
         token: token,
-        content: "Succesfully unliked post",
+        message: "Succesfully unliked post",
       });
     } else { /*If the post hasn't yet been liked, add the userId to the array*/
       post[0].likes.push(userId);
@@ -109,12 +108,12 @@ const updateLikes = async (req, res) => {
         .json({
           post: updatedPost[0],
           token: token,
-          content: "Succesfully liked post",
+          message: "Succesfully liked post",
         });
     }
   } catch (error) { 
     // console.log(error);
-    res.status(400).json({ content: "Something went wrong - try again" });
+    res.status(400).json({ message: "Something went wrong - try again" });
   }
 };
 
@@ -124,26 +123,26 @@ const deletePostbyId = async (req, res) => {
     const userId = req.user_id;
 
     if (!postId) {
-      return res.status(400).json({ content: "Post ID is required" });
+      return res.status(400).json({ message: "Post ID is required" });
     }
 
     const post = await Post.findById(postId);
     if (!post) {
-      return res.status(404).json({ content: "Post not found" });
+      return res.status(404).json({ message: "Post not found" });
     }
 
     if (post.userId.toString() !== userId) {
-      return res.status(403).json({ content: "Unauthorized action" });
+      return res.status(403).json({ message: "Unauthorized action" });
     }
 
     await post.deleteOne();
 
     const token = generateToken(userId);
     
-    res.status(200).json({ content: "Post deleted successfully", token: token });
+    res.status(200).json({ message: "Post deleted successfully", token: token });
   } catch (error) {
     console.error("Error deleting post:", error);
-    res.status(500).json({ content: "Something went wrong - try again" });
+    res.status(500).json({ message: "Something went wrong - try again" });
   }
 };
 
@@ -155,29 +154,29 @@ const updatePostById = async (req, res) => {
     const userId = req.user_id;
 
     if (!postId) {
-      return res.status(400).json({ content: "Post ID is required" });
+      return res.status(400).json({ message: "Post ID is required" });
     }
 
     const post = await Post.findById(postId);
     if (!post) {
-      return res.status(404).json({ content: "Post not found" });
+      return res.status(404).json({ message: "Post not found" });
     }
 
     if (post.userId.toString() !== userId) {
-      return res.status(403).json({ content: "Unauthorized action" });
+      return res.status(403).json({ message: "Unauthorized action" });
     }
 
-    post.content = req.body.content;
+    post.message = req.body.message;
     await post.save();
 
     const token = generateToken(userId);
 
-    res.status(200).json({ content: "Post updated successfully", token: token });
+    res.status(200).json({ message: "Post updated successfully", token: token });
 
   } catch (error) {
 
     console.error("Error updating post:", error);
-    res.status(500).json({ content: "Something went wrong - try again" });
+    res.status(500).json({ message: "Something went wrong - try again" });
 
   }
 
