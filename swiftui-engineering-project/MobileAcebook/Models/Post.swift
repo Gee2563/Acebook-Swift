@@ -7,14 +7,6 @@
 
 import Foundation
 
-//public struct Post: Codable {
-//    let _id: String
-//    let content: String
-//    let createdAt: String
-//    let imgUrl: String
-//    let createdBy: User
-//    var likes: [String]?
-//}
 public struct Post: Codable{
     let id: String
     let userId: PublicUser

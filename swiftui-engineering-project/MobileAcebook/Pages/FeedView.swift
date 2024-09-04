@@ -1,18 +1,47 @@
+//
+//  Feed.swift
+//  MobileAcebook
+//
+//  Created by Matt Wilkes on 02/09/2024.
+//
+
 import SwiftUI
 
-struct FeedPageView: View {
+
+struct Response: Codable {
+    var posts: [Post]
+}
+
+struct FeedView: View {
     @State var loggedOut : Bool = false
-    
+    @State private var posts = [Post]()
     var body: some View {
         VStack {
-            Text("Feed")
-                .font(.largeTitle)
             
-            Text("My userId: \(UserDefaults.standard.object(forKey: "userId") ?? "ELSE")").padding()
-            Text("My token: \(UserDefaults.standard.object(forKey: "token") ?? "ELSE")").padding()
-
+            NavigationView {
+                List { ForEach(posts, id: \.id) {item in
+                    VStack(alignment: .leading, spacing: 10.0) {
+                        Text(item.userId.username)
+                        Text(item.userId._id)
+                        Text(item.content)
+                            .font(.headline)
+                        Text(item.createdAt)
+                    }
+                    }
+                }
+            }
+            .listRowSpacing(10)
+            .onAppear {
+                fetchAllPosts { fetchedPosts, error in
+                    if let error = error {
+                        print("Error fetching posts: \(error.localizedDescription)")
+                    } else if let fetchedPosts = fetchedPosts {
+                        self.posts = fetchedPosts
+                    }
+                }
+            }
+            
         }
-        .padding()
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -37,11 +66,17 @@ struct FeedPageView: View {
                         WelcomePageView()
                     }
                     else if !loggedOut {
-                        FeedPageView()
+                        FeedView()
                     }
                 }
             }
         }
+       
     }
+
 }
 
+
+#Preview {
+    FeedView()
+}

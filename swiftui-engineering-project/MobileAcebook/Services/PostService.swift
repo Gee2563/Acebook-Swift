@@ -7,7 +7,7 @@
 import Foundation
 
 // Need to wait for logic for storing authtoken.
-let authToken = "YOUR_AUTH_TOKEN"
+let authToken = UserDefaults.standard.object(forKey: "token") ?? ""
 
 func deletePostByID(_ id: String, completion: @escaping (Error?) -> Void) {
     guard let url = URL(string: "https://localhost:5000/posts/delete") else {
@@ -137,9 +137,7 @@ func fetchAllPosts(completion: @escaping ([Post]?, Error?) -> Void) {
   var request = URLRequest(url: url)
   request.httpMethod = "GET"
 
-  // !!!!This needs to be taken into user defaults!!!
-  let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiTWF0dGlzY2F0IiwiaWF0IjoxNzI1MzA5ODMyfQ.Vr0UBkbvm55LUsHT6JvIWHECM0luGYEaWfuMXb9preQ"
-  request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+  request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
 
   URLSession.shared.dataTask(with: request) { data, response, error in
     guard let data = data, error == nil else {
