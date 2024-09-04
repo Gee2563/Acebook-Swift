@@ -2,6 +2,8 @@ const User = require("../models/user");
 const { generateToken } = require("../lib/token");
 
 const createToken = async (req, res) => {
+  console.log(req.body)
+
   const email = req.body.email;
   const password = req.body.password;
 
@@ -14,7 +16,7 @@ const createToken = async (req, res) => {
     res.status(401).json({ message: "Password incorrect" });
   } else {
     const token = generateToken(user.id);
-    res.status(201).json({ token: token, message: "OK" });
+    res.status(201).json({ userId: user.id, token: token, message: "OK" });
   }
 };
 
