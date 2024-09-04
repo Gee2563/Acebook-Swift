@@ -19,16 +19,16 @@ struct FeedView: View {
         VStack {
             
             NavigationView {
-                List { ForEach(posts, id: \.id) {item in
-                    VStack(alignment: .leading, spacing: 10.0) {
-                        Text(item.userId.username)
-                        Text(item.userId._id)
-                        Text(item.content)
-                            .font(.headline)
-                        Text(item.createdAt)
-                    }
+                Section{
+                    List { ForEach(posts, id: \.id) {item in
+                        NavigationLink(destination:ViewPost(post: item)){
+                            Text(item.content)
+                        }
+
+                        }
                     }
                 }
+                
             }
             .listRowSpacing(10)
             .onAppear {
