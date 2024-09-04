@@ -22,7 +22,6 @@ struct Feed: View {
                     VStack(alignment: .leading, spacing: 10.0) {
                         Text(item.userId.username)
                         Text(item.userId._id)
-//                        Text(item.userId
                         Text(item.content)
                             .font(.headline)
                         Text(item.createdAt)

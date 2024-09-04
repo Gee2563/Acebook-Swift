@@ -9,7 +9,7 @@ import Foundation
 // Need to wait for logic for storing authtoken.
 let authToken = "YOUR_AUTH_TOKEN"
 
-func deletePostByID(_ id: Int, completion: @escaping (Error?) -> Void) {
+func deletePostByID(_ id: String, completion: @escaping (Error?) -> Void) {
     guard let url = URL(string: "https://localhost:5000/posts/delete") else {
         completion(URLError(.badURL))
         return
@@ -34,7 +34,7 @@ func deletePostByID(_ id: Int, completion: @escaping (Error?) -> Void) {
     task.resume()
 }
 
-func updatePostByID(id: Int, newContent: String, completion: @escaping (Error?) -> Void) {
+func updatePostByID(id: String, newContent: String, completion: @escaping (Error?) -> Void) {
     guard let url = URL(string: "https://localhost:5000/posts/update") else {
         completion(URLError(.badURL))
         return
@@ -81,7 +81,7 @@ func updatePostByID(id: Int, newContent: String, completion: @escaping (Error?) 
 }
 
 
-func updateLikesByID( id: Int, userId: Int, completion: @escaping (Error?) -> Void) {
+func updateLikesByID( id: String, userId: String, completion: @escaping (Error?) -> Void) {
     guard let url = URL(string: "https://localhost:5000/posts/like") else {
         completion(URLError(.badURL))
         return

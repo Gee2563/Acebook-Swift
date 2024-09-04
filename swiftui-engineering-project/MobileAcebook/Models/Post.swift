@@ -20,7 +20,7 @@ public struct Post: Codable{
     let userId: PublicUser
     let content: String
 //    let comments: [Comment]
-//    let likes: [PublicUser]
+    let likes: [String]?
     let createdAt: String
     let imgUrl: String?
     
@@ -28,7 +28,7 @@ public struct Post: Codable{
         case id = "_id" // we receive _id from mongo
         case userId
         case content
-//        case likes
+        case likes
         case createdAt
         case imgUrl
            
