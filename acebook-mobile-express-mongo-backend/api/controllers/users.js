@@ -2,7 +2,7 @@ const User = require("../models/user");
 const { generateToken } = require("../lib/token");
 
 const create = async (req, res) => {
-  console.log(req)
+  // console.log(req)
 
   try {
     const userDetails = {

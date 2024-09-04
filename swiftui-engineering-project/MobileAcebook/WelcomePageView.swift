@@ -2,7 +2,7 @@ import SwiftUI
 
 struct WelcomePageView: View {
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 VStack {
                     Spacer()
@@ -41,6 +41,7 @@ struct WelcomePageView: View {
             }
             .padding()
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

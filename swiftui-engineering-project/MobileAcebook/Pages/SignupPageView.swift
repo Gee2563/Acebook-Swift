@@ -6,10 +6,8 @@ struct SignupPageView: View {
     @State private var username = ""
     @State private var imgUrl = ""
     
-    func handleSignup() {
-        signup(email, password, username, imgUrl)
-    }
-    
+    @State var success : Bool = false
+
     var body: some View {
         VStack {
             Text("Signup")
@@ -57,7 +55,10 @@ struct SignupPageView: View {
             .padding(.top)
 
             Button(
-                action: {handleSignup()},
+                action: {
+                    signup(email, password, username, imgUrl)
+                    success = true
+                },
                 label: {
                     Text("Signup")
                         .padding(.vertical, 8)
@@ -66,16 +67,30 @@ struct SignupPageView: View {
             )
             .buttonStyle(.borderedProminent)
             .padding(.top)
-            
+            .navigationDestination(isPresented: $success) {
+                if success {
+                    LoginPageView()
+                }
+                else if !success {
+                    SignupPageView()
+                }
+            }
+
             HStack {
                 Text("Already have an account?")
                 NavigationLink(destination: LoginPageView()) {
-                        Text("Login")
-                            .bold()
-                    }
+                    Text("Login")
+                        .bold()
+                }
+                Text("or")
+                NavigationLink(destination: WelcomePageView()) {
+                    Text("Zuck")
+                    .bold()
+                }
             }
             .padding(.top)
         }
         .padding()
+        .navigationBarBackButtonHidden(true)
     }
 }
