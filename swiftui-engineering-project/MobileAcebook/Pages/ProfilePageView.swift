@@ -1,26 +1,25 @@
 import SwiftUI
 
-struct FeedPageView: View {
+//            Text("My userId: \(UserDefaults.standard.object(forKey: "userId") ?? "ELSE")").padding()
+//            Text("My token: \(UserDefaults.standard.object(forKey: "token") ?? "ELSE")").padding()
+
+struct ProfilePageView: View {
     @State var loggedOut : Bool = false
     
     var body: some View {
         VStack {
-            Text("Feed")
+            Text("Profile")
                 .font(.largeTitle)
-            
-            Text("My userId: \(UserDefaults.standard.object(forKey: "userId") ?? "")").padding()
-            Text("My token: \(UserDefaults.standard.object(forKey: "token") ?? "")").padding()
-
         }
         .padding()
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                NavigationLink(destination: ProfilePageView()) {
-                    Text("Profile")
+                NavigationLink(destination: FeedPageView()) {
+                    Text("Feed")
                     .bold()
                 }
-
+                
                 Button (
                     action: {
                         UserDefaults.standard.set("", forKey: "userId")
@@ -38,11 +37,10 @@ struct FeedPageView: View {
                         WelcomePageView()
                     }
                     else if !loggedOut {
-                        FeedPageView()
+                        ProfilePageView()
                     }
                 }
             }
         }
     }
 }
-
