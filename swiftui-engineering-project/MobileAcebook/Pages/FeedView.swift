@@ -37,6 +37,8 @@ struct FeedView: View {
                         print("Error fetching posts: \(error.localizedDescription)")
                     } else if let fetchedPosts = fetchedPosts {
                         self.posts = fetchedPosts
+//                        print(authToken)
+                        
                     }
                 }
             }
