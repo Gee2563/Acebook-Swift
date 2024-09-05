@@ -17,8 +17,8 @@ const Post = mongoose.model("Post", PostSchema);
 // new Post({
 //   content: `This is a sample post after viewPost updates, I should be able to edit. createdAt: created at ${dateTimeString}`,
 //   createdAt: dateTimeString,
-//   userId: "ReplaceMeWithYourUser",
+//   userId: "66d855c0499b799dc0716c20",
 //   imgUrl: "assets/sample-post-image.png",
-//   likes: ["ReplaceMeWithAnotherUserObject", "ReplaceMeWithAnotherUserObject"],
+//   likes: ["66d731c90f4e2eac9525194d", "66d601a5bd717d3e9960b8a0"],
 // }).save();
 module.exports = Post;

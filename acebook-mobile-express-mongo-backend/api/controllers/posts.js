@@ -166,7 +166,7 @@ const updatePostById = async (req, res) => {
       return res.status(403).json({ message: "Unauthorized action" });
     }
 
-    post.message = req.body.message;
+    post.content = req.body.content;
     await post.save();
 
     const token = generateToken(userId);
