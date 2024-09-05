@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct Response: Codable {
     var posts: [Post]
 }
@@ -18,6 +17,9 @@ struct FeedView: View {
     var body: some View {
         VStack {
             
+            // Add CreatePost at the top of the feed
+            CreatePost() // Reuse the CreatePost view
+          
             NavigationView {
                 List { ForEach(posts, id: \.id) {item in
                     VStack(alignment: .leading, spacing: 10.0) {
@@ -35,9 +37,11 @@ struct FeedView: View {
                 fetchAllPosts { fetchedPosts, error in
                     if let error = error {
                         print("Error fetching posts: \(error.localizedDescription)")
+                        print(authToken)
+                        
                     } else if let fetchedPosts = fetchedPosts {
                         self.posts = fetchedPosts
-//                        print(authToken)
+                        print(authToken)
                         
                     }
                 }

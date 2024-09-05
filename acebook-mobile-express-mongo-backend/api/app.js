@@ -8,7 +8,6 @@ const authenticationRouter = require("./routes/authentication");
 const commentsRouter = require("./routes/comments");
 const tokenChecker = require("./middleware/tokenChecker");
 
-
 const app = express();
 
 // Allow requests from any client

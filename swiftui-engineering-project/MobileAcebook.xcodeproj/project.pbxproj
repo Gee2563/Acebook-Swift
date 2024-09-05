@@ -329,7 +329,6 @@
 			files = (
 				AE5D85E12AC9AFA9009680C6 /* AuthenticationService.swift in Sources */,
 				CC203C092C8703B6007DFAAC /* PostService.swift in Sources */,
-				AE5D85E62AC9B077009680C6 /* AuthenticationServiceProtocol.swift in Sources */,
 				2B438FC72C875938007EFC91 /* CreatePost.swift in Sources */,
 				CC203C0D2C870410007DFAAC /* Comment.swift in Sources */,
 				CC203C0F2C870527007DFAAC /* ViewPost.swift in Sources */,
