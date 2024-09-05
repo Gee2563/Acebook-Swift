@@ -11,6 +11,7 @@
 		8E01E65E2C86117700589C8A /* LoginPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E01E65D2C86117700589C8A /* LoginPageView.swift */; };
 		8E01E6602C86119600589C8A /* FeedPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E01E65F2C86119600589C8A /* FeedPageView.swift */; };
 		8EADBE962C88DEC5007DEC13 /* ProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EADBE952C88DEC5007DEC13 /* ProfilePageView.swift */; };
+		8EADBE982C88E3C1007DEC13 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EADBE972C88E3C1007DEC13 /* UserService.swift */; };
 		AE5D85B02AC8A221009680C6 /* MobileAcebookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D85AF2AC8A221009680C6 /* MobileAcebookApp.swift */; };
 		AE5D85B42AC8A224009680C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE5D85B32AC8A224009680C6 /* Assets.xcassets */; };
 		AE5D85B72AC8A224009680C6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE5D85B62AC8A224009680C6 /* Preview Assets.xcassets */; };
@@ -50,6 +51,7 @@
 		8E01E65D2C86117700589C8A /* LoginPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageView.swift; sourceTree = "<group>"; };
 		8E01E65F2C86119600589C8A /* FeedPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageView.swift; sourceTree = "<group>"; };
 		8EADBE952C88DEC5007DEC13 /* ProfilePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageView.swift; sourceTree = "<group>"; };
+		8EADBE972C88E3C1007DEC13 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		AE5D85AC2AC8A221009680C6 /* MobileAcebook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileAcebook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE5D85AF2AC8A221009680C6 /* MobileAcebookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileAcebookApp.swift; sourceTree = "<group>"; };
 		AE5D85B32AC8A224009680C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			children = (
 				CC203C082C8703B6007DFAAC /* PostService.swift */,
 				AE5D85E02AC9AFA9009680C6 /* AuthenticationService.swift */,
+				8EADBE972C88E3C1007DEC13 /* UserService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				CC203C0D2C870410007DFAAC /* Comment.swift in Sources */,
 				CC203C0F2C870527007DFAAC /* ViewPost.swift in Sources */,
 				AE5D85B02AC8A221009680C6 /* MobileAcebookApp.swift in Sources */,
+				8EADBE982C88E3C1007DEC13 /* UserService.swift in Sources */,
 				8E01E6602C86119600589C8A /* FeedPageView.swift in Sources */,
 				AE5D85E82AC9B29A009680C6 /* User.swift in Sources */,
 				8E01E65C2C86019E00589C8A /* SignupPageView.swift in Sources */,
