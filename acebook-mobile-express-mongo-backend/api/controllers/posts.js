@@ -36,6 +36,7 @@ const getAllPosts = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
+  console.log("Received a request...")
   try {
     const postContent = {
       content: req.body.content,
@@ -45,7 +46,7 @@ const createPost = async (req, res) => {
         ? req.body.imgUrl
         : null,
     };
-
+    console.log(postContent);
     const post = new Post(postContent);
     console.log(post);
 

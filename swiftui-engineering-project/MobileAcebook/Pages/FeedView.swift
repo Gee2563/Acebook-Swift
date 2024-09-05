@@ -14,6 +14,8 @@ struct FeedView: View {
     @State private var showAlert = false
     @State private var deleteError: Error? = nil
     var body: some View {
+                  // Add CreatePost at the top of the feed
+            CreatePost() // Reuse the CreatePost view
         VStack {
             NavigationStack {
                 List {
@@ -95,9 +97,11 @@ struct FeedView: View {
                 fetchAllPosts { fetchedPosts, error in
                     if let error = error {
                         print("Error fetching posts: \(error.localizedDescription)")
+                        print(authToken)
+                        
                     } else if let fetchedPosts = fetchedPosts {
                         self.posts = fetchedPosts
-//                        print(authToken)
+                        print(authToken)
                         
                     }
                 }
@@ -142,48 +146,3 @@ struct FeedView: View {
 #Preview {
     FeedView()
 }
-
-//VStack {
-//    NavigationStack {
-//        List {
-//            ForEach(posts, id: \.id) { item in
-//                // Use an HStack to combine the navigation and button
-//                VStack {
-//                    // NavigationLink content
-//                    NavigationLink(destination: ViewPost(post: item)) {
-//                        VStack(alignment: .leading, spacing: 5) {
-//                            Text(item.userId.username)
-//                                .font(.headline)
-//                                .foregroundColor(.blue)
-//                            Text(item.content)
-//                                .font(.body)
-//                                .foregroundColor(.primary)
-//                        }
-//                    }
-//                    .contentShape(Rectangle()) // This ensures the NavigationLink only takes up the text area
-//                    
-//                    Spacer()
-//                    
-//                    // Button for liking the post
-//                    Button(action: {
-//                        // Action for liking the post
-//                        print("Like button tapped")
-//                    }) {
-//                        Text("Like")
-//                            .foregroundColor(.blue)
-//                    }
-//                    .buttonStyle(PlainButtonStyle()) // Avoids button styling issues within List
-//                }
-//            }
-//        }
-//    }
-//    .onAppear {
-//        fetchAllPosts { fetchedPosts, error in
-//            if let error = error {
-//                print("Error fetching posts: \(error.localizedDescription)")
-//            } else if let fetchedPosts = fetchedPosts {
-//                self.posts = fetchedPosts
-//            }
-//        }
-//    }
-//}

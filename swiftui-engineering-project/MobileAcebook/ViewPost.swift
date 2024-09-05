@@ -215,4 +215,3 @@ struct ViewPost: View {
         }
     }
 }
-

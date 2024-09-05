@@ -8,15 +8,14 @@ const PostSchema = new mongoose.Schema({
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
 
-// const Post = mongoose.model("Post", PostSchema);
-
+const Post = mongoose.model("Post", PostSchema);
 
 // const dateTimeString = new Date().toLocaleString("en-GB");
 // new Post({
 //   content: `This is a sample post after viewPost updates, I should be able to edit. createdAt: created at ${dateTimeString}`,
 //   createdAt: dateTimeString,
-//   userId: "66d987ec766b2ea9c2da26a7",
+//   userId: "yourOwnUserIdHere",
 //   imgUrl: "assets/sample-post-image.png",
 //   likes: [],
 // }).save();
-// module.exports = Post;
+module.exports = Post;
