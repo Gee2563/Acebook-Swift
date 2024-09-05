@@ -6,7 +6,7 @@ struct WelcomePageView: View {
     var body: some View {
         NavigationStack {
             if storedToken as! String != "" {
-                FeedPageView()
+                FeedView()
             }
             else {
                 ZStack {

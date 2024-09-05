@@ -10,7 +10,8 @@ import SwiftUI
 
 struct ViewPost: View {
     var post: Post
-    @AppStorage("currentUserId") private var currentUserID: Int = -1 // Retrieve the current user ID from local storage
+    let currentUserID = UserDefaults.standard.string(forKey: "userId") ?? ""
+
     @Environment(\.dismiss) var dismiss // Go to previous view
     @State private var isEditing = false 
     @State private var editedContent: String = "" 
@@ -21,7 +22,7 @@ struct ViewPost: View {
     var body: some View {
         Section{
             VStack(alignment: .leading, spacing: 10) {
-                if currentUserID == post.userId {
+                if currentUserID == post.userId._id {
                     HStack {
                         Button(action: {
                             isEditing.toggle()
@@ -85,7 +86,7 @@ struct ViewPost: View {
                     }
                 } else {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("\(post.username):")
+                        Text("\(post.userId.username):")
                             .font(.headline)
                             .foregroundColor(.blue)
                         Text(post.content)
@@ -96,12 +97,12 @@ struct ViewPost: View {
                             
                             // This is the likes section
                             
-                            if !post.likes.isEmpty {
-                                Text(" \(post.likes.count) likes")
+                            if !(post.likes ?? []).isEmpty {
+                                Text(" \(post.likes?.count ?? 0) likes")
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
                                 Spacer()
-                                if post.likes.contains(currentUserID) {
+                                if (post.likes ?? []).contains(currentUserID) {
                                     Button(action: {
                                         updateLikesByID(id: post.id, userId: currentUserID) { error in
                                             if let error = error {
@@ -168,12 +169,12 @@ struct ViewPost: View {
     
 }
 
-#Preview {
-    UserDefaults.standard.set(1, forKey: "currentUserId")
-    
-    return ViewPost(
-        post: Post(postId: 1, userID: 1, username: "George Smith", content: "This is a raveaowihdfaowdhaowdiawd awhdoawhdaowdihwaod ", comments: [],likes: [1,2,3,4])
-    )
-}
+//#Preview {
+////    UserDefaults.standard.set(1, forKey: "currentUserId")
+//    
+////    return ViewPost(
+////        post: Post(postId: 1, userID: 1, username: "George Smith", content: "This is a raveaowihdfaowdhaowdiawd awhdoawhdaowdihwaod ", comments: [],likes: [1,2,3,4])
+////    )
+//}
 
 

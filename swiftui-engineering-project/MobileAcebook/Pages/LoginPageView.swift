@@ -61,7 +61,7 @@ struct LoginPageView: View {
             .padding(.top)
             .navigationDestination(isPresented: $success) {
                 if success {
-                    FeedPageView()
+                    FeedView()
                 }
                 else if !success {
                     LoginPageView()

@@ -7,9 +7,10 @@
 import Foundation
 
 // Need to wait for logic for storing authtoken.
-let authToken = "YOUR_AUTH_TOKEN"
+let authToken = UserDefaults.standard.object(forKey: "token") ?? ""
+let currentUserID = UserDefaults.standard.string(forKey: "userId") ?? ""
 
-func deletePostByID(_ id: Int, completion: @escaping (Error?) -> Void) {
+func deletePostByID(_ id: String, completion: @escaping (Error?) -> Void) {
     guard let url = URL(string: "https://localhost:5000/posts/delete") else {
         completion(URLError(.badURL))
         return
@@ -34,7 +35,7 @@ func deletePostByID(_ id: Int, completion: @escaping (Error?) -> Void) {
     task.resume()
 }
 
-func updatePostByID(id: Int, newContent: String, completion: @escaping (Error?) -> Void) {
+func updatePostByID(id: String, newContent: String, completion: @escaping (Error?) -> Void) {
     guard let url = URL(string: "https://localhost:5000/posts/update") else {
         completion(URLError(.badURL))
         return
@@ -81,7 +82,7 @@ func updatePostByID(id: Int, newContent: String, completion: @escaping (Error?) 
 }
 
 
-func updateLikesByID( id: Int, userId: Int, completion: @escaping (Error?) -> Void) {
+func updateLikesByID( id: String, userId: String, completion: @escaping (Error?) -> Void) {
     guard let url = URL(string: "https://localhost:5000/posts/like") else {
         completion(URLError(.badURL))
         return
@@ -125,4 +126,41 @@ func updateLikesByID( id: Int, userId: Int, completion: @escaping (Error?) -> Vo
     }
 
     task.resume()
+}
+
+func fetchAllPosts(completion: @escaping ([Post]?, Error?) -> Void) {
+  guard let url = URL(string: "http://localhost:3000/posts") else {
+    completion(
+      nil, NSError(domain: "", code: 400, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
+    return
+  }
+
+  var request = URLRequest(url: url)
+  request.httpMethod = "GET"
+
+  request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+
+  URLSession.shared.dataTask(with: request) { data, response, error in
+    guard let data = data, error == nil else {
+      completion(nil, error)
+      return
+    }
+
+    // Check response and decode
+    if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+      do {
+        let postsResponse = try JSONDecoder().decode(PostResponse.self, from: data)
+        completion(postsResponse.posts, nil)
+      } catch {
+        print("Decoding error: \(error)")
+        completion(nil, error)
+      }
+    } else {
+      completion(
+        nil,
+        NSError(
+          domain: "", code: (response as? HTTPURLResponse)?.statusCode ?? 500,
+          userInfo: [NSLocalizedDescriptionKey: "Failed to fetch posts"]))
+    }
+  }.resume()
 }
