@@ -10,8 +10,8 @@ import SwiftUI
 
 struct ViewPost: View {
     var post: Post
-    @AppStorage("userId") private var currentUserID: String = ""// Retrieve the current user ID from local storage
-//    @AppStorage("currentUserId") private var currentUserID: Int = -1 // Retrieve the current user ID from local storage
+    let currentUserID = UserDefaults.standard.string(forKey: "userId") ?? ""
+
     @Environment(\.dismiss) var dismiss // Go to previous view
     @State private var isEditing = false 
     @State private var editedContent: String = "" 

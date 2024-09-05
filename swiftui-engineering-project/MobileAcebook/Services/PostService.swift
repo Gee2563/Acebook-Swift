@@ -8,6 +8,7 @@ import Foundation
 
 // Need to wait for logic for storing authtoken.
 let authToken = UserDefaults.standard.object(forKey: "token") ?? ""
+let currentUserID = UserDefaults.standard.string(forKey: "userId") ?? ""
 
 func deletePostByID(_ id: String, completion: @escaping (Error?) -> Void) {
     guard let url = URL(string: "https://localhost:5000/posts/delete") else {
@@ -148,7 +149,7 @@ func fetchAllPosts(completion: @escaping ([Post]?, Error?) -> Void) {
     // Check response and decode
     if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
       do {
-        let postsResponse = try JSONDecoder().decode(Response.self, from: data)
+        let postsResponse = try JSONDecoder().decode(PostResponse.self, from: data)
         completion(postsResponse.posts, nil)
       } catch {
         print("Decoding error: \(error)")

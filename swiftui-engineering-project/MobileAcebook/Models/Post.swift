@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct PostResponse: Codable {
+    var posts: [Post]
+}
+
 public struct Post: Codable{
     let id: String
     let userId: PublicUser
