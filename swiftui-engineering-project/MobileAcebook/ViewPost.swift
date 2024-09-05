@@ -68,10 +68,13 @@ struct ViewPost: View {
                             if let error = error {
                                 deleteError = error
                                 showEditAlert = true
-                            } else {
-                                print("Post updated successfully")
-                                isEditing = false // Exit edit mode
-                            }
+                            } 
+//                            else {
+//                                print("Post updated successfully")
+//                                isEditing = false // Exit edit mode
+//                                dismiss()
+//                            }
+                            dismiss()
                         }
                     }) {
                         Text("Save Changes")

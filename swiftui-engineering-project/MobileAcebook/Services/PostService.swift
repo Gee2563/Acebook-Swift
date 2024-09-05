@@ -88,7 +88,7 @@ func updatePostByID(id: String, newContent: String, completion: @escaping (Error
     }
 
     var request = URLRequest(url: url)
-    request.httpMethod = "PATCH" // Check if PATCH is supported by the server
+    request.httpMethod = "PATCH" 
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
 
@@ -126,17 +126,17 @@ func updatePostByID(id: String, newContent: String, completion: @escaping (Error
             }
         }
 
-        if let data = data {
-            do {
-                let updatedPost = try JSONDecoder().decode(Post.self, from: data)
-                print("Updated post: \(updatedPost)")
-                completion(nil)
-            } catch {
-                completion(error)
-            }
-        } else {
-            completion(nil)
-        }
+//        if let data = data {
+//            do {
+//                let updatedPost = try JSONDecoder().decode(Post.self, from: data)
+//                print("Updated post: \(updatedPost)")
+//                completion(nil)
+//            } catch {
+//                completion(error)
+//            }
+//        } else {
+//            completion(nil)
+//        }
     }
 
     task.resume()
