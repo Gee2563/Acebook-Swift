@@ -13,3 +13,9 @@ public struct User: Codable {
         self.imgUrl = imgUrl
     }
 }
+
+public struct PublicUser: Codable {
+    let _id: String
+    let username: String
+    let profilePicture: String?
+}

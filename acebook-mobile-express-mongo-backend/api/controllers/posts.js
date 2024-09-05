@@ -3,8 +3,8 @@ const { generateToken } = require("../lib/token");
 
 const getAllPosts = async (req, res) => {
   try {
-    //Get all posts and populate the createdBy field with user data
-    const posts = await Post.find().populate("createdBy");
+    //Get all posts and populate the userId field with user data
+    const posts = await Post.find().populate("userId");
 
     const updatedPosts = [];
 
@@ -13,14 +13,14 @@ const getAllPosts = async (req, res) => {
     posts.forEach((post) => {
       let newPost = {
         _id: post._id,
-        message: post.message,
+        content: post.content,
         createdAt: post.createdAt,
         imgUrl: post.imgUrl,
         likes: post.likes,
-        createdBy: {
-          _id: post.createdBy._id,
-          username: post.createdBy.username,
-          profilePicture: post.createdBy.imgUrl,
+        userId: {
+          _id: post.userId._id.toString(),
+          username: post.userId.username,
+          profilePicture: post.userId.imgUrl,
         },
       };
 
@@ -38,9 +38,9 @@ const getAllPosts = async (req, res) => {
 const createPost = async (req, res) => {
   try {
     const postContent = {
-      message: req.body.message,
+      content: req.body.content,
       createdAt: Date.now(),
-      createdBy: req.user_id,
+      userId: req.user_id,
       imgUrl: req.body.imgUrl
         ? req.body.imgUrl
         : null,
