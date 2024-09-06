@@ -34,7 +34,14 @@ struct FeedView: View {
                                     Text(item.content)
                                         .font(.body)
                                         .foregroundColor(.primary)
+                                        .lineLimit(2)
+                                    .multilineTextAlignment(.leading)
+                                Divider()
                                 }
+                                .padding() 
+                                .background(Color.white) 
+                                .cornerRadius(10) 
+                                .shadow(color: Color.gray.opacity(0.3), radius: 5, x: 0, y: 2)
                             }
                             .contentShape(Rectangle()) //This is intended to seperate navigation from the likes
                             Spacer()
@@ -45,7 +52,7 @@ struct FeedView: View {
 
                 
             }
-            
+            .background(Color.blue.opacity(0.05))
             .onAppear {
                 fetchAllPosts { fetchedPosts, error in
                     if let error = error {
@@ -82,7 +89,9 @@ struct FeedView: View {
                 }
             }
             
-        } .background(Color.blue.opacity(0.10))
+        } 
+        .padding()
+        .background(Color.blue.opacity(0.10))
         
     }
 }
