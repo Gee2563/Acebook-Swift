@@ -180,4 +180,3 @@ struct ViewPost: View {
 ////    )
 //}
 
-
