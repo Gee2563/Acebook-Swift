@@ -42,7 +42,7 @@ struct ProfilePageView: View {
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                NavigationLink(destination: FeedPageView()) {
+                NavigationLink(destination: FeedView()) {
                     Text("Feed")
                     .bold()
                 }
