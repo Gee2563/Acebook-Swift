@@ -1,19 +1,13 @@
-//
-//  Feed.swift
-//  MobileAcebook
-//
-//  Created by Matt Wilkes on 02/09/2024.
-//
-
 import SwiftUI
-
 
 struct FeedView: View {
     @AppStorage("userId") var currentUserID: String = ""
-    @State var loggedOut : Bool = false
+    @State var loggedOut: Bool = false
     @State private var posts = [Post]()
     @State private var showAlert = false
     @State private var deleteError: Error? = nil
+    @State private var navigateToProfile = false  // State to control navigation to ProfilePageView
+    
     var body: some View {
                   // Add CreatePost at the top of the feed
            
@@ -35,9 +29,9 @@ struct FeedView: View {
                                         .foregroundColor(.primary)
                                 }
                             }
-                            .contentShape(Rectangle()) //This is intended to seperate navigation from the likes
+                            .contentShape(Rectangle()) //This is intended to separate navigation from the likes
                             Spacer()
-                            HStack{
+                            HStack {
                                 if !(item.likes ?? []).isEmpty {
                                     Text(" \(item.likes?.count ?? 0) likes")
                                         .font(.subheadline)
@@ -87,41 +81,36 @@ struct FeedView: View {
                                             .foregroundColor(.blue)
                                     }
                                 }
-                                
-                                
                             }
-
                         }
                     }
                 }
-
-                
             }
-            
             .onAppear {
                 fetchAllPosts { fetchedPosts, error in
                     if let error = error {
                         print("Error fetching posts: \(error.localizedDescription)")
                     } else if let fetchedPosts = fetchedPosts {
                         self.posts = fetchedPosts
-//                        print(authToken)
-                        
-
                     }
                 }
             }
             .navigationBarBackButtonHidden(true)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button("Profile") {
-                        print("You were taken to Profile view.")
+                    // Profile button with navigation
+                    Button(action: {
+                        navigateToProfile = true  // Set state to navigate to profile
+                    }) {
+                        Text("Profile")
                     }
+
+                    // Logout button
                     Button(action: {
                         UserDefaults.standard.set("", forKey: "userId")
                         UserDefaults.standard.set("", forKey: "token")
                         loggedOut = true
                         print("You were logged out.")
-                        print(UserDefaults.standard.object(forKey: "token") ?? "ELSE")
                     }) {
                         Text("Logout")
                     }
@@ -133,9 +122,12 @@ struct FeedView: View {
                     WelcomePageView()
                 }
             }
-            
-        } .background(Color.blue.opacity(0.10))
-        
+            // Navigate to ProfilePageView when navigateToProfile is true
+            .navigationDestination(isPresented: $navigateToProfile) {
+                ProfilePageView()
+            }
+        }
+        .background(Color.blue.opacity(0.10))
     }
 }
 
@@ -147,9 +139,6 @@ extension String {
     }
 }
 
-
 #Preview {
     FeedView()
 }
-
-
