@@ -7,8 +7,15 @@
 
 import Foundation
 
+
+struct PostResponse: Codable {
+    var posts: [Post]
+}
+
+
 public struct Post: Identifiable, Codable{
     public let id: String
+
     let userId: PublicUser
     let content: String
     let comments: [Comment]?

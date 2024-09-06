@@ -7,47 +7,100 @@
 
 import SwiftUI
 
-struct Response: Codable {
-    var posts: [Post]
-}
-struct FeedView: View {
-    @State var loggedOut: Bool = false
-    @State private var posts = [Post]()
 
+struct FeedView: View {
+    @AppStorage("userId") var currentUserID: String = ""
+    @State var loggedOut : Bool = false
+    @State private var posts = [Post]()
+    @State private var showAlert = false
+    @State private var deleteError: Error? = nil
     var body: some View {
-        
-        
-        NavigationView {
-            VStack {
-//                Section{
-                    CreatePost(posts: $posts)
-//                }
-                // Add CreatePost at the top of the feed
-              // Pass posts binding to CreatePost
-                
-                List(posts) { item in
-                    VStack(alignment: .leading) {
-                        Text(item.userId.username)
-                        Text(item.userId._id)
-                        Text(item.content)
-                            .font(.headline)
-                        
-                        // Convert date string to Date object for better display
-                        if let createdAtDate = item.createdAt.toDate() {
-                            Text(createdAtDate, style: .date)
+        VStack {
+            NavigationStack {
+                List {
+                    ForEach(posts, id: \.id) { item in
+                        @State var liked: Bool = false
+                        VStack {
+                            NavigationLink(destination: ViewPost(post: item)) {
+                                VStack(alignment: .leading, spacing: 5) {
+                                    Text(item.userId.username)
+                                        .font(.headline)
+                                        .foregroundColor(.blue)
+                                    Text(item.content)
+                                        .font(.body)
+                                        .foregroundColor(.primary)
+                                }
+                            }
+                            .contentShape(Rectangle()) //This is intended to seperate navigation from the likes
+                            Spacer()
+                            HStack{
+                                if !(item.likes ?? []).isEmpty {
+                                    Text(" \(item.likes?.count ?? 0) likes")
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                    Spacer()
+                                    if (item.likes ?? []).contains(currentUserID) {
+                                        Button(action: {
+                                            updateLikesByID(id: item.id, userId: currentUserID) { error in
+                                                if let error = error {
+                                                    deleteError = error
+                                                    showAlert = true
+                                                } else {
+                                                    print("Post unliked successfully")
+                                                }
+                                            }
+                                        }) {
+                                            Text("Unlike")
+                                                .foregroundColor(.red)
+                                        }
+                                    } else {
+                                        Button(action: {
+                                            updateLikesByID(id: item.id, userId: currentUserID) { error in
+                                                if let error = error {
+                                                    deleteError = error
+                                                    showAlert = true
+                                                } else {
+                                                    print("Post liked successfully")
+                                                }
+                                            }
+                                        }) {
+                                            Text("Like")
+                                                .foregroundColor(.blue)
+                                        }
+                                    }
+                                } else {
+                                    Button(action: {
+                                        updateLikesByID(id: item.id, userId: currentUserID) { error in
+                                            if let error = error {
+                                                deleteError = error
+                                                showAlert = true
+                                            } else {
+                                                print("Post liked successfully")
+                                            }
+                                        }
+                                    }) {
+                                        Text("Like")
+                                            .foregroundColor(.blue)
+                                    }
+                                }
+                                
+                                
+                            }
+
                         }
                     }
                 }
-                .listRowSpacing(10)
-                .onAppear {
-                    fetchAllPosts { fetchedPosts, error in
-                        if let error = error {
-                            print("Error fetching posts: \(error.localizedDescription)")
-                            print(authToken)
-                        } else if let fetchedPosts = fetchedPosts {
-                            self.posts = fetchedPosts
-                            print(authToken)
-                        }
+            }
+            
+            .onAppear {
+                fetchAllPosts { fetchedPosts, error in
+                    if let error = error {
+                        print("Error fetching posts: \(error.localizedDescription)")
+                    } else if let fetchedPosts = fetchedPosts {
+                        self.posts = fetchedPosts
+//                        print(authToken)
+                        
+
                     }
                 }
             }
@@ -91,3 +144,5 @@ extension String {
 #Preview {
     FeedView()
 }
+
+
