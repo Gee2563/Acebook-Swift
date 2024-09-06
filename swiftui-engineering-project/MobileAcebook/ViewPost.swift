@@ -68,10 +68,13 @@ struct ViewPost: View {
                             if let error = error {
                                 deleteError = error
                                 showEditAlert = true
-                            } else {
-                                print("Post updated successfully")
-                                isEditing = false // Exit edit mode
-                            }
+                            } 
+//                            else {
+//                                print("Post updated successfully")
+//                                isEditing = false // Exit edit mode
+//                                dismiss()
+//                            }
+                            dismiss()
                         }
                     }) {
                         Text("Save Changes")
@@ -176,5 +179,4 @@ struct ViewPost: View {
 ////        post: Post(postId: 1, userID: 1, username: "George Smith", content: "This is a raveaowihdfaowdhaowdiawd awhdoawhdaowdihwaod ", comments: [],likes: [1,2,3,4])
 ////    )
 //}
-
 

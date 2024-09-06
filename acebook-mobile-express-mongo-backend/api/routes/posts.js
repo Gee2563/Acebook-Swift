@@ -7,6 +7,6 @@ router.get("/", PostsController.getAllPosts);
 router.post("/", PostsController.createPost);
 router.put("/", PostsController.updateLikes);
 router.delete("/", PostsController.deletePostbyId);
-router.put("/update", PostsController.updatePostById);
+router.patch("/update", PostsController.updatePostById);
 
 module.exports = router;

@@ -35,18 +35,64 @@ func deletePostByID(_ id: String, completion: @escaping (Error?) -> Void) {
     task.resume()
 }
 
+//func updatePostByID(id: String, newContent: String, completion: @escaping (Error?) -> Void) {
+//    guard let url = URL(string: "https://localhost:5000/posts/update") else {
+//        completion(URLError(.badURL))
+//        return
+//    }
+//
+//    var request = URLRequest(url: url)
+//    request.httpMethod = "PATCH"
+//    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//    request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+//
+//    let body: [String: Any] = ["body": newContent]
+//    do {
+//        request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+//    } catch {
+//        completion(error)
+//        return
+//    }
+//
+//    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+//        if let error = error {
+//            completion(error)
+//            return
+//        }
+//
+//        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+//            completion(URLError(.badServerResponse))
+//            return
+//        }
+//
+//        if let data = data {
+//            do {
+//                let updatedPost = try JSONDecoder().decode(Post.self, from: data)
+//                print("Updated post: \(updatedPost)")
+//                completion(nil)
+//            } catch {
+//                completion(error)
+//            }
+//        } else {
+//            completion(nil)
+//        }
+//    }
+//
+//    task.resume()
+//}
+
 func updatePostByID(id: String, newContent: String, completion: @escaping (Error?) -> Void) {
-    guard let url = URL(string: "https://localhost:5000/posts/update") else {
+    guard let url = URL(string: "http://localhost:3000/posts/update") else {
         completion(URLError(.badURL))
         return
     }
 
     var request = URLRequest(url: url)
-    request.httpMethod = "PATCH"
+    request.httpMethod = "PATCH" 
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
 
-    let body: [String: Any] = ["body": newContent]
+    let body: [String: Any] = ["postId": id, "content": newContent]
     do {
         request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
     } catch {
@@ -54,28 +100,43 @@ func updatePostByID(id: String, newContent: String, completion: @escaping (Error
         return
     }
 
-    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+    // Print the request body for debugging
+    if let httpBody = request.httpBody, let bodyString = String(data: httpBody, encoding: .utf8) {
+        print("Request body: \(bodyString)")
+    }
+
+    let session = URLSession(configuration: .default)
+    let task = session.dataTask(with: request) { data, response, error in
         if let error = error {
+            print("Error: \(error.localizedDescription)")
             completion(error)
             return
         }
 
-        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-            completion(URLError(.badServerResponse))
-            return
+        if let httpResponse = response as? HTTPURLResponse {
+            print("HTTP Status Code: \(httpResponse.statusCode)")
+
+            // If not successful, print the server error message
+            if !(200...299).contains(httpResponse.statusCode) {
+                if let data = data, let errorMessage = String(data: data, encoding: .utf8) {
+                    print("Error message from server: \(errorMessage)")
+                }
+                completion(URLError(.badServerResponse))
+                return
+            }
         }
 
-        if let data = data {
-            do {
-                let updatedPost = try JSONDecoder().decode(Post.self, from: data)
-                print("Updated post: \(updatedPost)")
-                completion(nil)
-            } catch {
-                completion(error)
-            }
-        } else {
-            completion(nil)
-        }
+//        if let data = data {
+//            do {
+//                let updatedPost = try JSONDecoder().decode(Post.self, from: data)
+//                print("Updated post: \(updatedPost)")
+//                completion(nil)
+//            } catch {
+//                completion(error)
+//            }
+//        } else {
+//            completion(nil)
+//        }
     }
 
     task.resume()
@@ -163,4 +224,42 @@ func fetchAllPosts(completion: @escaping ([Post]?, Error?) -> Void) {
           userInfo: [NSLocalizedDescriptionKey: "Failed to fetch posts"]))
     }
   }.resume()
+}
+
+// KR-SENDING POST TO THE DB:
+
+//func createPost(id: String, newContent: String, completion: @escaping (Error?) -> Void) {
+func createPost(content: String, imgUrl: String?, completion: @escaping (Error?) -> Void) {
+    guard let url = URL(string: "http://localhost:3000/posts") else {
+        completion(NSError(domain: "", code: 400, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
+        return
+    }
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+    
+    let body: [String: Any] = ["content": content, "imgUrl": imgUrl ?? ""]
+    do {
+        request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+    } catch {
+        completion(error)
+        return
+    }
+    
+    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+            completion(error)
+            return
+        }
+        
+        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+            completion(URLError(.badServerResponse))
+            return
+        }
+        
+        completion(nil)
+    }
+    task.resume()
 }
