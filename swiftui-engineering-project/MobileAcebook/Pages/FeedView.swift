@@ -16,7 +16,7 @@ struct FeedView: View {
     @State private var deleteError: Error? = nil
     var body: some View {
                   // Add CreatePost at the top of the feed
-            CreatePost() // Reuse the CreatePost view
+           
         VStack {
             CreatePost()
 

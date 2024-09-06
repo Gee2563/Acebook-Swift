@@ -71,7 +71,8 @@ struct ViewPost: View {
                         if let error = error {
                             deleteError = error
                             showEditAlert = true
-                        // } else {
+                        }
+                        // else {
                         //     print("Post updated successfully")
                         //     isEditing = false // Exit edit mode
                         // }
@@ -88,6 +89,7 @@ struct ViewPost: View {
                         dismissButton: .default(Text("OK"))
                     )
                 }
+                    
             } else {
                 VStack(alignment: .leading, spacing: 5) {
                     Text("\(post.userId.username):")
@@ -226,3 +228,4 @@ struct ViewPost: View {
         }
     }
 }
+
