@@ -1,94 +1,43 @@
-//
-//  CreatePost.swift
-//  MobileAcebook
-//
-//  Created by Karla A Rangel Hernandez on 03/09/2024.
-//
-//import Foundation
-//import SwiftUI
-//
-//struct PostView: View {
-//    var postText: String
-//    
-//    var body: some View {
-//        VStack(alignment: .leading) {
-//            Text(postText)
-//                .padding()
-//                .background(Color.white)
-//                .cornerRadius(10)
-//        }
-//        .padding(.horizontal)
-//        .cornerRadius(12)
-//        .padding(.bottom, 8)
-//    }
-//}
-//
-//struct CreatePost: View {
-//    @State private var post = ""
-//    @State private var posts = [String]() // array to store posts
-//    
-//    var body: some View {
-//        VStack (alignment: .leading, spacing: 16) {
-//           
-////            Form {
-//                HStack {
-//                    TextField("What's on your mind?", text: $post)
-//                        .textFieldStyle(RoundedBorderTextFieldStyle())
-//                    
-//                    Button("Post") {
-//                        guard !post.isEmpty else { return }
-//                        posts.append(post)
-//                        post = ""
-//                    }
-//                }
-////            }
-//            .padding(.horizontal)
-//            .padding(.top, 80)
-//            
-//            ScrollView {
-//                VStack(spacing: 16) {
-//                    ForEach(posts, id: \.self) { post in
-//                        PostView(postText: post) // Use the new PostView here
-//                    }
-//                }
-//                .padding(.horizontal)
-////                .padding(.top, 8)
-//            }
-//        }
-//        .padding(.bottom, 16)
-//        .background(Color.gray.opacity(0.1))
-//        .edgesIgnoringSafeArea(.all)
-//    }
-//}
-//
-//#Preview {
-//    CreatePost()
-//}
-
 import SwiftUI
+import PhotosUI
 
-//struct PostView: View{
-//    var postText: String
-//    
-//    var body: some View {
-//        VStack(alignment: .leading) {
-//            Text(postText)
-//                .padding()
-//                .background(Color.white)
-//                .cornerRadius(10)
-//        }
-//        .padding(.horizontal)
-//        .cornerRadius(12)
-//        .padding(.bottom, 8)
-//    }
-//}
 struct CreatePost: View {
     @State private var postContent = ""
-        @State private var posts = [Post]() //store posts here
-        @State private var errorMessage = ""
+    @State private var posts = [Post]() // Store posts here
+    @State private var errorMessage = ""
+    @State private var selectedImageData: Data? = nil  // State to store the image data
+    @State private var selectedPhotoPickerItem: PhotosPickerItem? = nil  // State for the selected photo picker item
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
+                PhotosPicker(selection: $selectedPhotoPickerItem, matching: .images) {
+                    
+                    Label("", systemImage: "photo")
+                        
+                    
+
+                }
+                .onChange(of: selectedPhotoPickerItem) { newItem in
+                    // When a new photo is picked, load the image data
+                    Task {
+                        if let newItem = newItem {
+                            do {
+                                if let data = try await newItem.loadTransferable(type: Data.self) {
+                                    self.selectedImageData = data
+                                }
+                            } catch {
+                                print("Error loading image data: \(error.localizedDescription)")
+                            }
+                        }
+                    }
+                }
+
+                if !errorMessage.isEmpty {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                }
+
                 TextField("What's on your mind?", text: $postContent)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
 
@@ -96,7 +45,7 @@ struct CreatePost: View {
                     guard !postContent.isEmpty else { return }
 
                     // Call the backend to create a post
-                    createPost(content: postContent, imgUrl: nil) { error in
+                    createPost(content: postContent, imgUrl: selectedImageData) { error in
                         if let error = error {
                             errorMessage = error.localizedDescription
                             print("Error creating post: \(errorMessage)")
@@ -111,34 +60,53 @@ struct CreatePost: View {
                         }
                     }
                     postContent = "" // Clear input after post is created
+                    selectedImageData = nil // Clear selected image data after posting
                 }) {
                     Text("Post")
                 }
             }
             .padding(.horizontal)
-//            .padding(.top, 120)
 
-            if !errorMessage.isEmpty {
-                Text(errorMessage)
-                    .foregroundColor(.red)
+            // Display the selected image if available
+            if let imageData = selectedImageData, let uiImage = UIImage(data: imageData) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 200)
+                    .clipShape(Rectangle())
+                    .padding()
             }
 
-//            ScrollView {
-//                VStack(spacing: 16) {
-//                    ForEach(posts) { post in
-//                        PostView(postText: post.content)
-//                    }
-//                }
-//                .padding(.horizontal)
-//            }
+            
+            // Optionally, display existing posts (for debugging or testing)
+            // Uncomment the code below if you want to display posts
+            /*
+            ScrollView {
+                VStack(spacing: 16) {
+                    ForEach(posts) { post in
+                        PostView(postText: post.content)
+                    }
+                }
+                .padding(.horizontal)
+            }
+            */
         }
-//        .padding(.bottom, 16)
-        .background(Color.gray.opacity(0.1))
-       
+        .background(Color.blue.opacity(0.1))
+        .padding()
     }
 }
 
+// Mocked `createPost` function for demonstration purposes
+func createPost(content: String, imgUrl: Data?, completion: @escaping (Error?) -> Void) {
+    // Add your API call here
+    completion(nil)
+}
 
-//#Preview {
-//    CreatePost(posts: [Post(postId: String, userID: "1", content: "Content", comments: []?, likes: [], createdAt: "String", imgUrl: "String"?)])
-//}
+
+
+
+// Uncomment the preview if you want to test the view in SwiftUI preview
+///*
+#Preview {
+    CreatePost()
+}

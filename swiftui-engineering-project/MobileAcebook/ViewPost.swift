@@ -89,6 +89,7 @@ struct ViewPost: View {
                     }
                 } else {
                     VStack(alignment: .leading, spacing: 5) {
+                        
                         Text("\(post.userId.username):")
                             .font(.headline)
                             .foregroundColor(.blue)

@@ -28,6 +28,7 @@
 		CC203C0B2C8703C8007DFAAC /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC203C0A2C8703C8007DFAAC /* Post.swift */; };
 		CC203C0D2C870410007DFAAC /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC203C0C2C870410007DFAAC /* Comment.swift */; };
 		CC203C0F2C870527007DFAAC /* ViewPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC203C0E2C870527007DFAAC /* ViewPost.swift */; };
+		CC203C132C8B1239007DFAAC /* imageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC203C122C8B1239007DFAAC /* imageHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		CC203C0A2C8703C8007DFAAC /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		CC203C0C2C870410007DFAAC /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		CC203C0E2C870527007DFAAC /* ViewPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPost.swift; sourceTree = "<group>"; };
+		CC203C122C8B1239007DFAAC /* imageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 				AE5D85B52AC8A224009680C6 /* Preview Content */,
 				AE5D85D92AC8A337009680C6 /* WelcomePageView.swift */,
 				2B438FC62C875938007EFC91 /* CreatePost.swift */,
+				CC203C122C8B1239007DFAAC /* imageHandler.swift */,
 			);
 			path = MobileAcebook;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				8EADBE982C88E3C1007DEC13 /* UserService.swift in Sources */,
 				C9FC8AB02C86693F00ED4E13 /* FeedView.swift in Sources */,
 				AE5D85E82AC9B29A009680C6 /* User.swift in Sources */,
+				CC203C132C8B1239007DFAAC /* imageHandler.swift in Sources */,
 				8E01E65C2C86019E00589C8A /* SignupPageView.swift in Sources */,
 				CC203C0B2C8703C8007DFAAC /* Post.swift in Sources */,
 				AE5D85DA2AC8A337009680C6 /* WelcomePageView.swift in Sources */,
