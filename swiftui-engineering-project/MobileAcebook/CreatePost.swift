@@ -83,10 +83,9 @@ import SwiftUI
 //    }
 //}
 struct CreatePost: View {
-    @Binding var posts: [Post]
     @State private var postContent = ""
-    @State private var errorMessage = ""
-
+        @State private var posts = [Post]() //store posts here
+        @State private var errorMessage = ""
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
@@ -117,7 +116,7 @@ struct CreatePost: View {
                 }
             }
             .padding(.horizontal)
-//            .padding(.top, 10)
+//            .padding(.top, 120)
 
             if !errorMessage.isEmpty {
                 Text(errorMessage)
@@ -133,9 +132,9 @@ struct CreatePost: View {
 //                .padding(.horizontal)
 //            }
         }
-        .padding(.bottom, 16)
+//        .padding(.bottom, 16)
         .background(Color.gray.opacity(0.1))
-            
+       
     }
 }
 

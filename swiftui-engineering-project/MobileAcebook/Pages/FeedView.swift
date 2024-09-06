@@ -16,6 +16,8 @@ struct FeedView: View {
     @State private var deleteError: Error? = nil
     var body: some View {
         VStack {
+            CreatePost()
+
             NavigationStack {
                 List {
                     ForEach(posts, id: \.id) { item in
@@ -90,6 +92,8 @@ struct FeedView: View {
                         }
                     }
                 }
+
+                
             }
             
             .onAppear {
@@ -128,7 +132,8 @@ struct FeedView: View {
                 }
             }
             
-        }
+        } .background(Color.blue.opacity(0.10))
+        
     }
 }
 
