@@ -9,6 +9,8 @@ struct FeedView: View {
     @State private var navigateToProfile = false  // State to control navigation to ProfilePageView
     
     var body: some View {
+                  // Add CreatePost at the top of the feed
+           
         VStack {
             CreatePost()
 

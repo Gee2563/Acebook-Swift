@@ -24,7 +24,7 @@ const getCommentsByPost = async (req, res) => {
               username: comment.createdBy.username,
             },
           };
-
+          console.log(updatedComment)
           responseComments.push(updatedComment);
         });
 

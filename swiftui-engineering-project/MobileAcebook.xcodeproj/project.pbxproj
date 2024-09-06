@@ -28,6 +28,7 @@
 		CC203C0B2C8703C8007DFAAC /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC203C0A2C8703C8007DFAAC /* Post.swift */; };
 		CC203C0D2C870410007DFAAC /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC203C0C2C870410007DFAAC /* Comment.swift */; };
 		CC203C0F2C870527007DFAAC /* ViewPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC203C0E2C870527007DFAAC /* ViewPost.swift */; };
+		CC203C112C89D501007DFAAC /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC203C102C89D501007DFAAC /* CommentService.swift */; };
 		CC203C132C8B1239007DFAAC /* imageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC203C122C8B1239007DFAAC /* imageHandler.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		CC203C0A2C8703C8007DFAAC /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		CC203C0C2C870410007DFAAC /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		CC203C0E2C870527007DFAAC /* ViewPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPost.swift; sourceTree = "<group>"; };
+		CC203C102C89D501007DFAAC /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
 		CC203C122C8B1239007DFAAC /* imageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -183,6 +185,7 @@
 			children = (
 				CC203C082C8703B6007DFAAC /* PostService.swift */,
 				AE5D85E02AC9AFA9009680C6 /* AuthenticationService.swift */,
+				CC203C102C89D501007DFAAC /* CommentService.swift */,
 				8EADBE972C88E3C1007DEC13 /* UserService.swift */,
 			);
 			path = Services;
@@ -346,6 +349,7 @@
 				8EADBE982C88E3C1007DEC13 /* UserService.swift in Sources */,
 				C9FC8AB02C86693F00ED4E13 /* FeedView.swift in Sources */,
 				AE5D85E82AC9B29A009680C6 /* User.swift in Sources */,
+				CC203C112C89D501007DFAAC /* CommentService.swift in Sources */,
 				CC203C132C8B1239007DFAAC /* imageHandler.swift in Sources */,
 				8E01E65C2C86019E00589C8A /* SignupPageView.swift in Sources */,
 				CC203C0B2C8703C8007DFAAC /* Post.swift in Sources */,
