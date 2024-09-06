@@ -67,44 +67,40 @@
 
 import SwiftUI
 
-struct PostView: View{
-    var postText: String
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text(postText)
-                .padding()
-                .background(Color.white)
-                .cornerRadius(10)
-        }
-        .padding(.horizontal)
-        .cornerRadius(12)
-        .padding(.bottom, 8)
-    }
-}
-
-struct CreatePost:View {
+//struct PostView: View{
+//    var postText: String
+//    
+//    var body: some View {
+//        VStack(alignment: .leading) {
+//            Text(postText)
+//                .padding()
+//                .background(Color.white)
+//                .cornerRadius(10)
+//        }
+//        .padding(.horizontal)
+//        .cornerRadius(12)
+//        .padding(.bottom, 8)
+//    }
+//}
+struct CreatePost: View {
     @State private var postContent = ""
-    @State private var posts = [Post]() //store posts here
-    @State private var errorMessage = ""
-    
+        @State private var posts = [Post]() //store posts here
+        @State private var errorMessage = ""
     var body: some View {
-        VStack (alignment: .leading, spacing: 16) {
-            //input place for new post
+        VStack(alignment: .leading, spacing: 16) {
             HStack {
                 TextField("What's on your mind?", text: $postContent)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                
+
                 Button(action: {
                     guard !postContent.isEmpty else { return }
-                    
-                    // call the backend to create a post
+
+                    // Call the backend to create a post
                     createPost(content: postContent, imgUrl: nil) { error in
                         if let error = error {
                             errorMessage = error.localizedDescription
                             print("Error creating post: \(errorMessage)")
                         } else {
-                            // refresh posts after successful creation
                             fetchAllPosts { fetchedPosts, error in
                                 if let error = error {
                                     print("Error fetching posts: \(error.localizedDescription)")
@@ -120,34 +116,29 @@ struct CreatePost:View {
                 }
             }
             .padding(.horizontal)
-            .padding(.top, 80)
-            
-            //Display all posts including the newly created ones
-            ScrollView {
-                VStack(spacing: 16) {
-                    ForEach(posts, id: \.id) { post in
-                        PostView(postText: post.content)
-                    }
-                }
-                .padding(.horizontal)
+//            .padding(.top, 120)
+
+            if !errorMessage.isEmpty {
+                Text(errorMessage)
+                    .foregroundColor(.red)
             }
+
+//            ScrollView {
+//                VStack(spacing: 16) {
+//                    ForEach(posts) { post in
+//                        PostView(postText: post.content)
+//                    }
+//                }
+//                .padding(.horizontal)
+//            }
         }
-        .padding(.bottom, 16)
+//        .padding(.bottom, 16)
         .background(Color.gray.opacity(0.1))
-        .edgesIgnoringSafeArea(.all)
-        .onAppear {
-            fetchAllPosts { fetchedPosts, error in
-                if let error = error {
-                    print("Error fetching posts: \(error.localizedDescription)")
-                    
-                } else if let fetchedPosts = fetchedPosts {
-                    self.posts = fetchedPosts
-                }
-            }
-        }
+       
     }
 }
 
-#Preview {
-    CreatePost()
-}
+
+//#Preview {
+//    CreatePost(posts: [Post(postId: String, userID: "1", content: "Content", comments: []?, likes: [], createdAt: "String", imgUrl: "String"?)])
+//}

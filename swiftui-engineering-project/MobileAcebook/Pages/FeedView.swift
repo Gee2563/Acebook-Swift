@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct FeedView: View {
     @AppStorage("userId") var currentUserID: String = ""
     @State var loggedOut : Bool = false
@@ -17,6 +18,8 @@ struct FeedView: View {
                   // Add CreatePost at the top of the feed
             CreatePost() // Reuse the CreatePost view
         VStack {
+            CreatePost()
+
             NavigationStack {
                 List {
                     ForEach(posts, id: \.id) { item in
@@ -91,58 +94,62 @@ struct FeedView: View {
                         }
                     }
                 }
+
+                
             }
             
             .onAppear {
                 fetchAllPosts { fetchedPosts, error in
                     if let error = error {
                         print("Error fetching posts: \(error.localizedDescription)")
-                        print(authToken)
-                        
                     } else if let fetchedPosts = fetchedPosts {
                         self.posts = fetchedPosts
-                        print(authToken)
+//                        print(authToken)
                         
+
                     }
                 }
             }
-            
-        }
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button("Profile") {
-                    print("You were taken to Profile view.")
-                }
-                Button (
-                    action: {
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button("Profile") {
+                        print("You were taken to Profile view.")
+                    }
+                    Button(action: {
                         UserDefaults.standard.set("", forKey: "userId")
                         UserDefaults.standard.set("", forKey: "token")
                         loggedOut = true
                         print("You were logged out.")
                         print(UserDefaults.standard.object(forKey: "token") ?? "ELSE")
-                    },
-                    label: {
+                    }) {
                         Text("Logout")
                     }
-                )
-                .buttonStyle(.borderedProminent)
-                .navigationDestination(isPresented: $loggedOut) {
-                    if loggedOut {
-                        WelcomePageView()
-                    }
-                    else if !loggedOut {
-                        FeedView()
-                    }
+                    .buttonStyle(.borderedProminent)
                 }
             }
-        }
-       
+            .navigationDestination(isPresented: $loggedOut) {
+                if loggedOut {
+                    WelcomePageView()
+                }
+            }
+            
+        } .background(Color.blue.opacity(0.10))
+        
     }
+}
 
+extension String {
+    func toDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ" // Adjust this format to match your server's date format
+        return dateFormatter.date(from: self)
+    }
 }
 
 
 #Preview {
     FeedView()
 }
+
+

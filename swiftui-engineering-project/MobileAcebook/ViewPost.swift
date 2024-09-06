@@ -1,3 +1,10 @@
+//
+//  ViewPost.swift
+//  MobileAcebook
+//
+//  Created by George Smith on 03/09/2024.
+//
+
 import Foundation
 import SwiftUI
 
@@ -30,11 +37,14 @@ struct ViewPost: View {
                         deletePostByID(post.id) { error in
                             if let error = error {
                                 deleteError = error
-                                showAlert = true
-                            } else {
-                                print("Post deleted successfully")
-                                dismiss() // Navigate back to ContentView
-                            }
+                                showEditAlert = true
+                            } 
+//                            else {
+//                                print("Post updated successfully")
+//                                isEditing = false // Exit edit mode
+//                                dismiss()
+//                            }
+                            dismiss()
                         }
                     }) {
                         Label("", systemImage: "trash")
@@ -61,10 +71,11 @@ struct ViewPost: View {
                         if let error = error {
                             deleteError = error
                             showEditAlert = true
-                        } else {
-                            print("Post updated successfully")
-                            isEditing = false // Exit edit mode
-                        }
+                        // } else {
+                        //     print("Post updated successfully")
+                        //     isEditing = false // Exit edit mode
+                        // }
+                        dismiss()
                     }
                 }) {
                     Text("Save Changes")
