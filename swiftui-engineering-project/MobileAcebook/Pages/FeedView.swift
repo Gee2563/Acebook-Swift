@@ -15,6 +15,8 @@ struct FeedView: View {
     @State private var showAlert = false
     @State private var deleteError: Error? = nil
     var body: some View {
+                  // Add CreatePost at the top of the feed
+           
         VStack {
             CreatePost()
 
