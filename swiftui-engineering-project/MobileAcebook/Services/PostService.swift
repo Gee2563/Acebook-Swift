@@ -35,52 +35,6 @@ func deletePostByID(_ id: String, completion: @escaping (Error?) -> Void) {
     task.resume()
 }
 
-//func updatePostByID(id: String, newContent: String, completion: @escaping (Error?) -> Void) {
-//    guard let url = URL(string: "https://localhost:5000/posts/update") else {
-//        completion(URLError(.badURL))
-//        return
-//    }
-//
-//    var request = URLRequest(url: url)
-//    request.httpMethod = "PATCH"
-//    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//    request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
-//
-//    let body: [String: Any] = ["body": newContent]
-//    do {
-//        request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
-//    } catch {
-//        completion(error)
-//        return
-//    }
-//
-//    let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//        if let error = error {
-//            completion(error)
-//            return
-//        }
-//
-//        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-//            completion(URLError(.badServerResponse))
-//            return
-//        }
-//
-//        if let data = data {
-//            do {
-//                let updatedPost = try JSONDecoder().decode(Post.self, from: data)
-//                print("Updated post: \(updatedPost)")
-//                completion(nil)
-//            } catch {
-//                completion(error)
-//            }
-//        } else {
-//            completion(nil)
-//        }
-//    }
-//
-//    task.resume()
-//}
-
 func updatePostByID(id: String, newContent: String, completion: @escaping (Error?) -> Void) {
     guard let url = URL(string: "http://localhost:3000/posts/update") else {
         completion(URLError(.badURL))
@@ -125,27 +79,15 @@ func updatePostByID(id: String, newContent: String, completion: @escaping (Error
                 return
             }
         }
-
-//        if let data = data {
-//            do {
-//                let updatedPost = try JSONDecoder().decode(Post.self, from: data)
-//                print("Updated post: \(updatedPost)")
-//                completion(nil)
-//            } catch {
-//                completion(error)
-//            }
-//        } else {
-//            completion(nil)
-//        }
     }
 
     task.resume()
 }
 
 
-func updateLikesByID( id: String, userId: String, completion: @escaping (Error?) -> Void) {
-    guard let url = URL(string: "https://localhost:5000/posts/like") else {
-        completion(URLError(.badURL))
+func updateLikesByID(id: String, userId: String, completion: @escaping ([String]?, Error?) -> Void) {
+    guard let url = URL(string: "http://localhost:3000/posts/like") else {
+        completion(nil, URLError(.badURL))
         return
     }
 
@@ -154,40 +96,45 @@ func updateLikesByID( id: String, userId: String, completion: @escaping (Error?)
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
 
-    let body: [String: Any] = ["userId": userId]
+    let body: [String: Any] = ["postId": id]
     do {
         request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
     } catch {
-        completion(error)
+        completion(nil, error)
         return
     }
-
-    let task = URLSession.shared.dataTask(with: request) { data, response, error in
-        if let error = error {
-            completion(error)
+    
+    URLSession.shared.dataTask(with: request) { data, response, error in
+        // Check if there was an error
+        guard let data = data, error == nil else {
+            completion(nil, error)
             return
         }
 
-        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-            completion(URLError(.badServerResponse))
-            return
-        }
-
-        if let data = data {
+        // Check if the HTTP status code is valid
+        if let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) {
             do {
-                let updatedPost = try JSONDecoder().decode(Post.self, from: data)
-                print("Updated post: \(updatedPost)")
-                completion(nil)
+                // Decode the JSON response to extract the likes array
+                if let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                   let post = jsonResponse["post"] as? [String: Any],
+                   let likes = post["likes"] as? [String] {
+                    completion(likes, nil)
+                } else {
+                    let error = NSError(domain: "", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "Failed to decode response"])
+                    completion(nil, error)
+                }
             } catch {
-                completion(error)
+                print("Decoding error: \(error)")
+                completion(nil, error)
             }
         } else {
-            completion(nil)
+            let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 500
+            let error = NSError(domain: "", code: statusCode, userInfo: [NSLocalizedDescriptionKey: "Failed to update likes"])
+            completion(nil, error)
         }
-    }
-
-    task.resume()
+    }.resume()
 }
+
 
 func fetchAllPosts(completion: @escaping ([Post]?, Error?) -> Void) {
   guard let url = URL(string: "http://localhost:3000/posts") else {

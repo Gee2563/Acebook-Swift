@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 
 struct ViewPost: View {
-    var post: Post
+    @Binding var post: Post
+//    var post: Post
     let currentUserID = UserDefaults.standard.string(forKey: "userId") ?? ""
 
     @Environment(\.dismiss) var dismiss // Go to previous view
@@ -20,6 +21,11 @@ struct ViewPost: View {
     @State private var deleteError: Error? = nil
     @State private var allComments: [Comment] = [] // Fetch and update comments
     @State private var newComment: String = "" // New comment input
+//    @State private var liked: Bool = false
+//    @State private var likes: [String] = []
+    @State private var errorMessage: String? = nil
+    
+    
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -100,57 +106,76 @@ struct ViewPost: View {
                         .foregroundColor(.primary)
 
                     // Likes section
+//                    HStack {
+//                        if !(post.likes ?? []).isEmpty {
+//                            Text(" \(post.likes?.count ?? 0) likes")
+//                                .font(.subheadline)
+//                                .foregroundColor(.gray)
+//                            Spacer()
+//                            if (post.likes ?? []).contains(currentUserID) {
+//                                Button(action: {
+//                                    print("already liked, likes: \(likes)")
+//                                    updateLikesByID(id: post.id, userId: currentUserID) { updatedLikes, error in
+//                                        DispatchQueue.main.async {
+//                                            if let updatedLikes = updatedLikes {
+//                                                self.likes = updatedLikes
+//                                            } else if let error = error {
+//                                                self.errorMessage = error.localizedDescription
+//                                            }
+//                                        }
+//                                    }
+//                                }) {
+//                                    Text("Unlike")
+//                                        .foregroundColor(.red)
+//                                }
+//                            } else {
+//                                Button(action: {
+//                                    print("not liked, likes: \(likes)")
+//                                    updateLikesByID(id: post.id, userId: currentUserID) { updatedLikes, error in
+//                                        DispatchQueue.main.async {
+//                                            if let updatedLikes = updatedLikes {
+//                                                self.likes = updatedLikes
+//                                            } else if let error = error {
+//                                                self.errorMessage = error.localizedDescription
+//                                            }
+//                                        }
+//                                    }
+//                                }) {
+//                                    Text("Like")
+//                                        .foregroundColor(.blue)
+//                                }
+//                            }
+//                        } else {
+//                            Text(" \(post.likes?.count ?? 0) likes")
+//                                .font(.subheadline)
+//                                .foregroundColor(.gray)
+//                            Spacer()
+//                            Button(action: {
+//                                updateLikesByID(id: post.id, userId: currentUserID) { updatedLikes, error in
+//                                    DispatchQueue.main.async {
+//                                        if let updatedLikes = updatedLikes {
+//                                            self.likes = updatedLikes
+//                                        } else if let error = error {
+//                                            self.errorMessage = error.localizedDescription
+//                                        }
+//                                    }
+//                                }
+//                            }) {
+//                                Text("Like")
+//                                    .foregroundColor(.blue)
+//                            }
+//                        }
+//                    }
                     HStack {
-                        if !(post.likes ?? []).isEmpty {
-                            Text(" \(post.likes?.count ?? 0) likes")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                            Spacer()
-                            if (post.likes ?? []).contains(currentUserID) {
-                                Button(action: {
-                                    updateLikesByID(id: post.id, userId: currentUserID) { error in
-                                        if let error = error {
-                                            deleteError = error
-                                            showAlert = true
-                                        } else {
-                                            print("Post unliked successfully")
-                                        }
-                                    }
-                                }) {
-                                    Text("Unlike")
-                                        .foregroundColor(.red)
-                                }
-                            } else {
-                                Button(action: {
-                                    updateLikesByID(id: post.id, userId: currentUserID) { error in
-                                        if let error = error {
-                                            deleteError = error
-                                            showAlert = true
-                                        } else {
-                                            print("Post liked successfully")
-                                        }
-                                    }
-                                }) {
-                                    Text("Like")
-                                        .foregroundColor(.blue)
-                                }
-                            }
-                        } else {
-                            Button(action: {
-                                updateLikesByID(id: post.id, userId: currentUserID) { error in
-                                    if let error = error {
-                                        deleteError = error
-                                        showAlert = true
-                                    } else {
-                                        print("Post liked successfully")
-                                    }
-                                }
-                            }) {
-                                Text("Like")
-                                    .foregroundColor(.blue)
-                            }
-                        }
-                    }
+                                           Text(" \(post.likes?.count ?? 0) likes")
+                                               .font(.subheadline)
+                                               .foregroundColor(.gray)
+                                           Spacer()
+                                           Button(action: toggleLike) {
+                                               Text(post.likes?.contains(currentUserID) == true ? "Unlike" : "Like")
+                                                   .foregroundColor(post.likes?.contains(currentUserID) == true ? .red : .blue)
+                                           }
+                                       }
                 }
             }
 
@@ -227,5 +252,32 @@ struct ViewPost: View {
             }
         }
     }
+    // Toggle like or unlike
+        func toggleLike() {
+            updateLikesByID(id: post.id, userId: currentUserID) { updatedLikes, error in
+                DispatchQueue.main.async {
+                    if var updatedLikes = updatedLikes {
+                        post.likes = updatedLikes  // Directly update post.likes
+                    } else if let error = error {
+                        self.errorMessage = error.localizedDescription
+                    }
+                }
+            }
+        }
+//    func fetchPostLikes() {
+//            isLoading = true
+//            fetchAllPosts { posts, error in
+//                DispatchQueue.main.async {
+//                    isLoading = false
+//                    if let posts = posts {
+//                        if let post = posts.first(where: { $0.id == postId }) {
+//                            self.likes = post.likes
+//                        }
+//                    } else if let error = error {
+//                        self.errorMessage = error.localizedDescription
+//                    }
+//                }
+//            }
+//        }
 }
 
