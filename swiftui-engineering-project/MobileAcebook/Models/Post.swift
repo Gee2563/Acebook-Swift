@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct Post: Codable{
-    let id: String
+public struct Post: Identifiable, Codable{
+    public let id: String
     let userId: PublicUser
     let content: String
     let comments: [Comment]?

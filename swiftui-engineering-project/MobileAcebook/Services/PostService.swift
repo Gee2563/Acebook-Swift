@@ -168,7 +168,7 @@ func fetchAllPosts(completion: @escaping ([Post]?, Error?) -> Void) {
 
 //func createPost(id: String, newContent: String, completion: @escaping (Error?) -> Void) {
 func createPost(content: String, imgUrl: String?, completion: @escaping (Error?) -> Void) {
-    guard let url = URL(string: "https://localhost:3000/posts") else {
+    guard let url = URL(string: "http://localhost:3000/posts") else {
         completion(NSError(domain: "", code: 400, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
         return
     }
@@ -178,8 +178,6 @@ func createPost(content: String, imgUrl: String?, completion: @escaping (Error?)
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
     
-    // Prepare the post data body
-    //    let body: [String: Any] = ["body": newContent]
     let body: [String: Any] = ["content": content, "imgUrl": imgUrl ?? ""]
     do {
         request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
@@ -194,23 +192,12 @@ func createPost(content: String, imgUrl: String?, completion: @escaping (Error?)
             return
         }
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
-                completion(error)
-                return
-            }
-            
-            // Check HTTP response status code
-            if let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) {
-                completion(nil)
-            } else {
-                let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 500
-                completion(
-                    NSError(domain: "", code: statusCode, userInfo: [NSLocalizedDescriptionKey: "Failed to create comment"])
-                )
-            }
-        }.resume()
+        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+            completion(URLError(.badServerResponse))
+            return
+        }
+        
+        completion(nil)
     }
-    
+    task.resume()
 }
-
