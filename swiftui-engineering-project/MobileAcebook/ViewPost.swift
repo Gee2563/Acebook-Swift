@@ -21,8 +21,6 @@ struct ViewPost: View {
     @State private var deleteError: Error? = nil
     @State private var allComments: [Comment] = [] // Fetch and update comments
     @State private var newComment: String = "" // New comment input
-//    @State private var liked: Bool = false
-//    @State private var likes: [String] = []
     @State private var errorMessage: String? = nil
     
     
@@ -105,77 +103,16 @@ struct ViewPost: View {
                         .font(.body)
                         .foregroundColor(.primary)
 
-                    // Likes section
-//                    HStack {
-//                        if !(post.likes ?? []).isEmpty {
-//                            Text(" \(post.likes?.count ?? 0) likes")
-//                                .font(.subheadline)
-//                                .foregroundColor(.gray)
-//                            Spacer()
-//                            if (post.likes ?? []).contains(currentUserID) {
-//                                Button(action: {
-//                                    print("already liked, likes: \(likes)")
-//                                    updateLikesByID(id: post.id, userId: currentUserID) { updatedLikes, error in
-//                                        DispatchQueue.main.async {
-//                                            if let updatedLikes = updatedLikes {
-//                                                self.likes = updatedLikes
-//                                            } else if let error = error {
-//                                                self.errorMessage = error.localizedDescription
-//                                            }
-//                                        }
-//                                    }
-//                                }) {
-//                                    Text("Unlike")
-//                                        .foregroundColor(.red)
-//                                }
-//                            } else {
-//                                Button(action: {
-//                                    print("not liked, likes: \(likes)")
-//                                    updateLikesByID(id: post.id, userId: currentUserID) { updatedLikes, error in
-//                                        DispatchQueue.main.async {
-//                                            if let updatedLikes = updatedLikes {
-//                                                self.likes = updatedLikes
-//                                            } else if let error = error {
-//                                                self.errorMessage = error.localizedDescription
-//                                            }
-//                                        }
-//                                    }
-//                                }) {
-//                                    Text("Like")
-//                                        .foregroundColor(.blue)
-//                                }
-//                            }
-//                        } else {
-//                            Text(" \(post.likes?.count ?? 0) likes")
-//                                .font(.subheadline)
-//                                .foregroundColor(.gray)
-//                            Spacer()
-//                            Button(action: {
-//                                updateLikesByID(id: post.id, userId: currentUserID) { updatedLikes, error in
-//                                    DispatchQueue.main.async {
-//                                        if let updatedLikes = updatedLikes {
-//                                            self.likes = updatedLikes
-//                                        } else if let error = error {
-//                                            self.errorMessage = error.localizedDescription
-//                                        }
-//                                    }
-//                                }
-//                            }) {
-//                                Text("Like")
-//                                    .foregroundColor(.blue)
-//                            }
-//                        }
-//                    }
                     HStack {
-                                           Text(" \(post.likes?.count ?? 0) likes")
+                            Text(" \(post.likes?.count ?? 0) likes")
                                                .font(.subheadline)
                                                .foregroundColor(.gray)
-                                           Spacer()
-                                           Button(action: toggleLike) {
-                                               Text(post.likes?.contains(currentUserID) == true ? "Unlike" : "Like")
-                                                   .foregroundColor(post.likes?.contains(currentUserID) == true ? .red : .blue)
-                                           }
-                                       }
+                            Spacer()
+                            Button(action: toggleLike) {
+                            Text(post.likes?.contains(currentUserID) == true ? "Unlike" : "Like")
+                            .foregroundColor(post.likes?.contains(currentUserID) == true ? .red : .blue)
+                                                        }
+                            }
                 }
             }
 
