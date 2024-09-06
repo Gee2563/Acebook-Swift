@@ -74,6 +74,9 @@ const updateLikes = async (req, res) => {
     /*Figure out whether the post has already been liked*/
     post[0].likes.forEach((likeId) => {
       if (likeId.toString() === userId) {
+        // console.log("Already liked")
+        // console.log(userId)
+        // console.log(likeId.toString())
         alreadyLiked = true;
       }
     });

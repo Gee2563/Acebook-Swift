@@ -19,7 +19,7 @@ public struct Post: Identifiable, Codable{
     let userId: PublicUser
     let content: String
     let comments: [Comment]?
-    let likes: [String]?
+    var likes: [String]?
     let createdAt: String
     let imgUrl: String?
     

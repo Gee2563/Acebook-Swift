@@ -5,6 +5,7 @@
 //  Created by Matt Wilkes on 02/09/2024.
 //
 
+import Foundation
 import SwiftUI
 
 
@@ -22,10 +23,10 @@ struct FeedView: View {
 
             NavigationStack {
                 List {
-                    ForEach(posts, id: \.id) { item in
+                    ForEach($posts, id: \.id) { $item in
                         @State var liked: Bool = false
                         VStack {
-                            NavigationLink(destination: ViewPost(post: item)) {
+                            NavigationLink(destination: ViewPost(post: $item)) {
                                 VStack(alignment: .leading, spacing: 5) {
                                     Text(item.userId.username)
                                         .font(.headline)
@@ -37,59 +38,6 @@ struct FeedView: View {
                             }
                             .contentShape(Rectangle()) //This is intended to seperate navigation from the likes
                             Spacer()
-                            HStack{
-                                if !(item.likes ?? []).isEmpty {
-                                    Text(" \(item.likes?.count ?? 0) likes")
-                                        .font(.subheadline)
-                                        .foregroundColor(.gray)
-                                    Spacer()
-                                    if (item.likes ?? []).contains(currentUserID) {
-                                        Button(action: {
-                                            updateLikesByID(id: item.id, userId: currentUserID) { error in
-                                                if let error = error {
-                                                    deleteError = error
-                                                    showAlert = true
-                                                } else {
-                                                    print("Post unliked successfully")
-                                                }
-                                            }
-                                        }) {
-                                            Text("Unlike")
-                                                .foregroundColor(.red)
-                                        }
-                                    } else {
-                                        Button(action: {
-                                            updateLikesByID(id: item.id, userId: currentUserID) { error in
-                                                if let error = error {
-                                                    deleteError = error
-                                                    showAlert = true
-                                                } else {
-                                                    print("Post liked successfully")
-                                                }
-                                            }
-                                        }) {
-                                            Text("Like")
-                                                .foregroundColor(.blue)
-                                        }
-                                    }
-                                } else {
-                                    Button(action: {
-                                        updateLikesByID(id: item.id, userId: currentUserID) { error in
-                                            if let error = error {
-                                                deleteError = error
-                                                showAlert = true
-                                            } else {
-                                                print("Post liked successfully")
-                                            }
-                                        }
-                                    }) {
-                                        Text("Like")
-                                            .foregroundColor(.blue)
-                                    }
-                                }
-                                
-                                
-                            }
 
                         }
                     }
@@ -151,5 +99,3 @@ extension String {
 #Preview {
     FeedView()
 }
-
-

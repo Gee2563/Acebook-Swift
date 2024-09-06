@@ -5,7 +5,7 @@ const PostsController = require("../controllers/posts");
 
 router.get("/", PostsController.getAllPosts);
 router.post("/", PostsController.createPost);
-router.put("/", PostsController.updateLikes);
+router.patch("/like", PostsController.updateLikes);
 router.delete("/", PostsController.deletePostbyId);
 router.patch("/update", PostsController.updatePostById);
 
